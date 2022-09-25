@@ -9,6 +9,7 @@ class LocalizationService extends Translations {
   LocalizationService(String initLang) {
     locale = _getLocale(initLang);
     _changeFontFamily(initLang);
+    _changeTextDirection(initLang);
   }
 
   late final Locale locale;
@@ -16,6 +17,8 @@ class LocalizationService extends Translations {
   static const fallBackLocale = Locale('fa', 'IR');
 
   static String? fontFamily;
+
+  static TextDirection? textDirection;
 
   static final langs = [
     'فارسی',
@@ -27,18 +30,24 @@ class LocalizationService extends Translations {
     Locale('en', 'US'),
   ];
 
-  static const fontFamilies = [
-    'Peyda',
-    'Roboto'
-  ];
+  static const fontFamilies = ['Peyda', 'Roboto'];
 
   @override
-  Map<String, Map<String, String>> get keys => {'fa_IR': faIR, 'en_US': enUS};
+  Map<String, Map<String, String>> get keys => {
+        'fa_IR': faIR,
+        'en_US': enUS,
+      };
+
+  static Map<String, TextDirection> get _textDecorations => {
+        'fa_IR': TextDirection.rtl,
+        'en_US': TextDirection.ltr,
+      };
 
   static void changeLocale(String localeName) {
     sharedPreferences.setString('language', localeName);
     final locale = _getLocale(localeName);
     _changeFontFamily(localeName);
+    _changeTextDirection(localeName);
     Get.updateLocale(locale);
   }
 
@@ -47,6 +56,14 @@ class LocalizationService extends Translations {
       fontFamily = fontFamilies[langs.indexOf(localeName)];
     } catch (e) {
       fontFamily = fontFamilies[0];
+    }
+  }
+
+  static void _changeTextDirection(String localeName) {
+    try {
+      textDirection = _textDecorations[langs.indexOf(localeName)];
+    } catch (e) {
+      textDirection = _textDecorations[0];
     }
   }
 

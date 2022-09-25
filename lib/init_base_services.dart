@@ -6,7 +6,7 @@ import 'main.dart';
 import 'services/localization_service.dart';
 import 'services/service_locator.dart';
 
-Future<void> initAppStart() async {
+Future<void> initBaseServices() async {
   sharedPreferences = await SharedPreferences.getInstance();
   Get.put(LocalizationService('فارسی'));
   Get.put(ThemeController(ThemeMode.values
