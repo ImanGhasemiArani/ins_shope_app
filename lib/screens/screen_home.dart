@@ -10,7 +10,7 @@ class ScreenHome extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: const Center(
-        child: Text('خانه'),
+        child: Text('home'),
       ),
     );
   }
