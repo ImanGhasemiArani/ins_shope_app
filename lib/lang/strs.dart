@@ -1,5 +1,5 @@
 class Strs {
-  static var appNameStr = "App Name";
-
   Strs._();
+
+  static const appNameStr = 'اپلیکیشن خرید';
 }
