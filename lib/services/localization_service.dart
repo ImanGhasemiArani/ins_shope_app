@@ -61,9 +61,9 @@ class LocalizationService extends Translations {
 
   static void _changeTextDirection(String localeName) {
     try {
-      textDirection = _textDecorations[langs.indexOf(localeName)];
+      textDirection = _textDecorations[_getLocale(localeName).toString()];
     } catch (e) {
-      textDirection = _textDecorations[0];
+      textDirection = _textDecorations[locales[0].toString()];
     }
   }
 
