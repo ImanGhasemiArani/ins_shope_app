@@ -1,13 +1,19 @@
+import 'dart:math';
+
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
 import '../assets/assets.gen.dart';
 import '../lang/strs.dart';
+import '../services/localization_service.dart';
 import '../widget/ad_slider_widget/ad_slider_tile.dart';
 import '../widget/ad_slider_widget/ad_slider_view.dart';
 import '../widget/my_app_bar/my_app_bar.dart';
+import '../widget/post_view/post_list_view.dart';
+import '../widget/post_view/post_view.dart';
 import '../widget/story_content_Widget/story_list_view.dart';
 import '../widget/story_content_Widget/story_tile.dart';
 
@@ -23,25 +29,51 @@ class ScreenHome extends StatelessWidget {
   }
 
   PreferredSizeWidget buildAppBar() => MyAppBar(
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
-        title: Text(
-          Strs.appNameStr.tr,
-          style: Get.theme.textTheme.headline6
-              ?.copyWith(fontWeight: FontWeight.bold),
+        title: AnimationConfiguration.staggeredList(
+          position: 0,
+          duration: const Duration(milliseconds: 500),
+          child: SlideAnimation(
+            horizontalOffset: 50 *
+                (LocalizationService.textDirection == TextDirection.ltr
+                    ? -1
+                    : 1),
+            child: FadeInAnimation(
+              child: Text(
+                Strs.appNameStr.tr,
+                style: Get.theme.textTheme.headline6
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ),
         actions: [
-          SizedBox(
-            height: 40,
-            width: 40,
-            child: ClipSmoothRect(
-              radius: SmoothBorderRadius(
-                cornerRadius: 15,
-                cornerSmoothing: 0.6,
-              ),
-              child: CupertinoButton.filled(
-                padding: EdgeInsets.zero,
-                onPressed: onDirectBtnPressed,
-                child: Assets.icons.directNormalTwoTone.svg(),
+          AnimationConfiguration.staggeredList(
+            position: 0,
+            duration: const Duration(milliseconds: 500),
+            child: SlideAnimation(
+              verticalOffset: -40,
+              child: FadeInAnimation(
+                child: CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  minSize: 0,
+                  onPressed: onDirectBtnPressed,
+                  child: Card(
+                    color: Get.theme.colorScheme.primary,
+                    margin: EdgeInsets.zero,
+                    shape: SmoothRectangleBorder(
+                      borderRadius: SmoothBorderRadius(
+                        cornerRadius: 15,
+                        cornerSmoothing: 1,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Assets.icons.directNormalTwoTone.svg(),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -61,51 +93,91 @@ class BodyContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
+      clipBehavior: Clip.none,
       slivers: [
-        _buildStoryContent(),
-        const SliverToBoxAdapter(child: SizedBox(height: 25)),
-        _buildCarouselSlider(),
-        const SliverToBoxAdapter(child: SizedBox(height: 25)),
+        SliverToBoxAdapter(
+          child: _buildStoryContent(),
+        ),
+        SliverToBoxAdapter(
+          child: configAnimation(const SizedBox(height: 25), 1),
+        ),
+        SliverToBoxAdapter(
+          child: configAnimation(_buildCarouselSlider(), 2, hO: 0, vO: 50),
+        ),
+        SliverToBoxAdapter(
+          child: configAnimation(const SizedBox(height: 10), 3),
+        ),
+        _buildPostContent(),
+        const SliverToBoxAdapter(child: SizedBox(height: 100)),
       ],
     );
   }
 
-  SliverToBoxAdapter _buildStoryContent() {
-    return SliverToBoxAdapter(
-      child: StoryListView(
-        storyTileSize: (Get.width - 40 * 2) / 6,
-        contents: List.generate(
+  Widget _buildStoryContent() {
+    //if its used for slivers, this return should Wrap to SliverToBoxAdapter
+    return StoryListView(
+      storyTileSize: (Get.width - 40 * 2) / 6,
+      contentDelegates: List.generate(
+        20,
+        (index) => StoryTileContentDelegate(
+          'https://picsum.photos/${Random().nextInt(50) + 50}/',
+          index >= 3,
+          () {},
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCarouselSlider() {
+    //if its used for slivers, this return should Wrap to SliverToBoxAdapter
+    return AdSliderView(
+      contentDelegates: List.generate(
+        5,
+        (index) => AdSliderTileContentDelegate(
+          'https://picsum.photos/${Random().nextInt(100) + 300}/150',
+          () {},
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPostContent() {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      sliver: PostListView(
+        contentDelegates: List.generate(
           20,
-          (index) => StoryTileContent(
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtWCdZIODyqzU2774g_rxjf8hwq8Qi06Qyrw&usqp=CAU',
-            index >= 3,
-            () {},
+          (index) => PostContentDelegate(
+            'Iman.Casper',
+            "Tehran, Iran",
+            'https://picsum.photos/${Random().nextInt(50) + 50}/',
+            'https://picsum.photos/${Random().nextInt(100) + 300}/',
+            Random().nextInt(10000),
+            isFollowing: Random().nextBool(),
+            isLiked: Random().nextBool(),
+            isBookmarked: Random().nextBool(),
           ),
         ),
       ),
     );
   }
 
-  SliverToBoxAdapter _buildCarouselSlider() {
-    return SliverToBoxAdapter(
-      child: AdSliderView(
-        contents: [
-          AdSliderTileContent(
-              'https://mir-s3-cdn-cf.behance.net/project_modules/fs/2bbcfa99737217.5ef9be3dbb9a9.jpg',
-              () {}),
-          AdSliderTileContent(
-              'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/shoes-sale-bannuer-design-template-38d8c87b5b44afb4906d2d55743a98ae_screen.jpg?ts=1616352652',
-              () {}),
-          AdSliderTileContent(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM007iJ4BhAywUDqx9tMX0bxOPo68KELs6JPYIWq8rY78l-Nxwf_qbdfd8etBNFLfB8g&usqp=CAU',
-              () {}),
-          AdSliderTileContent(
-              'https://assets-1.placeit.net/smart_templates/1515ef3eb8ded7f7d8e96b4fecc69c38/assets/33e413340c3a69c9869fcf9c978ad1e8.png',
-              () {}),
-          AdSliderTileContent(
-              'https://de3uph0m5upal.cloudfront.net/wp-content/uploads/2021/10/tenis.jpg',
-              () {}),
-        ],
+  Widget configAnimation(
+    Widget child,
+    int pos, {
+    double hO = 50,
+    double vO = 0,
+  }) {
+    return AnimationConfiguration.staggeredList(
+      duration: const Duration(milliseconds: 500),
+      position: pos,
+      child: SlideAnimation(
+        horizontalOffset: hO *
+            (LocalizationService.textDirection == TextDirection.ltr ? -1 : 1),
+        verticalOffset: vO,
+        child: FadeInAnimation(
+          child: child,
+        ),
       ),
     );
   }

@@ -103,13 +103,13 @@ class Themes {
     ),
     cardTheme: CardTheme(
       clipBehavior: Clip.antiAlias,
-      //   elevation: 8,
+      elevation: 8,
       color: const Color(0xffFFFFFF),
       surfaceTintColor: const Color(0xffFFFFFF),
       shape: SmoothRectangleBorder(
         borderRadius: SmoothBorderRadius(
           cornerRadius: 20,
-          cornerSmoothing: 0.6,
+          cornerSmoothing: 1,
         ),
       ),
     ),
@@ -146,13 +146,13 @@ class Themes {
     ),
     cardTheme: CardTheme(
       clipBehavior: Clip.antiAlias,
-      //   elevation: 8,
+      elevation: 8,
       color: const Color(0xff16202A),
       surfaceTintColor: const Color(0xff16202A),
       shape: SmoothRectangleBorder(
         borderRadius: SmoothBorderRadius(
           cornerRadius: 20,
-          cornerSmoothing: 0.6,
+          cornerSmoothing: 1,
         ),
       ),
     ),

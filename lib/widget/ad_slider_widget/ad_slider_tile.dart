@@ -5,23 +5,23 @@ import 'package:flutter/material.dart';
 class AdSliderTile extends StatelessWidget {
   const AdSliderTile({
     super.key,
-    required this.content,
+    required this.delegate,
     required this.imgSize,
   });
 
-  final AdSliderTileContent content;
+  final AdSliderTileContentDelegate delegate;
   final Size imgSize;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      onPressed: content.onAdTilePressed,
+      onPressed: delegate.onAdTilePressed,
       minSize: 0,
       padding: EdgeInsets.zero,
       child: Card(
         margin: EdgeInsets.zero,
         child: CachedNetworkImage(
-          imageUrl: content.adImgUrl,
+          imageUrl: delegate.adImgUrl,
           fit: BoxFit.cover,
           height: imgSize.height,
           width: imgSize.width,
@@ -33,9 +33,9 @@ class AdSliderTile extends StatelessWidget {
 
 typedef OnAdTilePressed = void Function();
 
-class AdSliderTileContent {
+class AdSliderTileContentDelegate {
   final String adImgUrl;
   final OnAdTilePressed onAdTilePressed;
 
-  AdSliderTileContent(this.adImgUrl, this.onAdTilePressed);
+  AdSliderTileContentDelegate(this.adImgUrl, this.onAdTilePressed);
 }

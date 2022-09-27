@@ -8,10 +8,12 @@ import 'ad_slider_tile.dart';
 class AdSliderView extends StatelessWidget {
   const AdSliderView({
     super.key,
-    required this.contents,
+    required this.contentDelegates,
+    this.height = 150,
   });
 
-  final List<AdSliderTileContent> contents;
+  final List<AdSliderTileContentDelegate> contentDelegates;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +22,13 @@ class AdSliderView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         CarouselSlider.builder(
-          itemCount: contents.length,
+          itemCount: contentDelegates.length,
           itemBuilder: (context, index, realIndex) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: AdSliderTile(
-                content: contents[index],
-                imgSize: const Size(double.infinity, 150),
+                delegate: contentDelegates[index],
+                imgSize: Size(double.infinity, height),
               ),
             );
           },
@@ -35,13 +37,14 @@ class AdSliderView extends StatelessWidget {
             autoPlay: true,
             enlargeCenterPage: true,
             viewportFraction: 1,
-            height: 150,
+            height: height,
             onPageChanged: (index, reason) => currentAdIndex.value = index,
+            clipBehavior: Clip.none,
           ),
         ),
         Obx(
           () => DotsIndicator(
-            dotsCount: contents.length,
+            dotsCount: contentDelegates.length,
             position: currentAdIndex.value.toDouble(),
             decorator: DotsDecorator(
               color: Colors.grey,

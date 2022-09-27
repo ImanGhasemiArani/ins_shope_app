@@ -7,18 +7,18 @@ import 'package:get/get.dart';
 class StoryTile extends StatelessWidget {
   const StoryTile({
     super.key,
-    required this.content,
+    required this.delegate,
     required this.storkWidth,
     required this.imgSize,
   });
-  final StoryTileContent content;
+  final StoryTileContentDelegate delegate;
   final double imgSize;
   final double storkWidth;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      onPressed: content.onStoryTilePressed,
+      onPressed: delegate.onStoryTilePressed,
       minSize: 0,
       padding: EdgeInsets.zero,
       child: Container(
@@ -26,7 +26,7 @@ class StoryTile extends StatelessWidget {
         width: imgSize + storkWidth * 4,
         padding: EdgeInsets.all(storkWidth),
         decoration: ShapeDecoration(
-          gradient: content.isViewed
+          gradient: delegate.isViewed
               ? null
               : const LinearGradient(
                   begin: Alignment.topRight,
@@ -39,11 +39,11 @@ class StoryTile extends StatelessWidget {
                     Color(0xFFFAFF00),
                   ],
                 ),
-          color: content.isViewed ? Colors.transparent : null,
+          color: delegate.isViewed ? Colors.transparent : null,
           shape: SmoothRectangleBorder(
             borderRadius: SmoothBorderRadius(
               cornerRadius: 20,
-              cornerSmoothing: 0.6,
+              cornerSmoothing: 1,
             ),
           ),
         ),
@@ -56,14 +56,14 @@ class StoryTile extends StatelessWidget {
             shape: SmoothRectangleBorder(
               borderRadius: SmoothBorderRadius(
                 cornerRadius: 20,
-                cornerSmoothing: 0.6,
+                cornerSmoothing: 1,
               ),
             ),
           ),
           child: Card(
             margin: EdgeInsets.zero,
             child: CachedNetworkImage(
-              imageUrl: content.profImgUrl,
+              imageUrl: delegate.profImgUrl,
               fit: BoxFit.cover,
               height: imgSize,
               width: imgSize,
@@ -77,12 +77,12 @@ class StoryTile extends StatelessWidget {
 
 typedef OnStoryTilePressed = void Function();
 
-class StoryTileContent {
+class StoryTileContentDelegate {
   final String profImgUrl;
   final bool isViewed;
   final OnStoryTilePressed onStoryTilePressed;
 
-  StoryTileContent(
+  StoryTileContentDelegate(
     this.profImgUrl,
     this.isViewed,
     this.onStoryTilePressed,

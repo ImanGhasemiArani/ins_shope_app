@@ -21,6 +21,14 @@ class $AssetsIconsGen {
   SvgGenImage get bag2TwoTone =>
       const SvgGenImage('assets/icons/bag-2-twoTone.svg');
 
+  /// File path: assets/icons/bookmark-bulk.svg
+  SvgGenImage get bookmarkBulk =>
+      const SvgGenImage('assets/icons/bookmark-bulk.svg');
+
+  /// File path: assets/icons/bookmark-twoTone.svg
+  SvgGenImage get bookmarkTwoTone =>
+      const SvgGenImage('assets/icons/bookmark-twoTone.svg');
+
   /// File path: assets/icons/category-2-bulk.svg
   SvgGenImage get category2Bulk =>
       const SvgGenImage('assets/icons/category-2-bulk.svg');
@@ -37,6 +45,13 @@ class $AssetsIconsGen {
   SvgGenImage get directNotificationTwoTone =>
       const SvgGenImage('assets/icons/direct-notification-twoTone.svg');
 
+  /// File path: assets/icons/heart-bulk.svg
+  SvgGenImage get heartBulk => const SvgGenImage('assets/icons/heart-bulk.svg');
+
+  /// File path: assets/icons/heart-twoTone.svg
+  SvgGenImage get heartTwoTone =>
+      const SvgGenImage('assets/icons/heart-twoTone.svg');
+
   /// File path: assets/icons/home-1-bulk.svg
   SvgGenImage get home1Bulk =>
       const SvgGenImage('assets/icons/home-1-bulk.svg');
@@ -44,6 +59,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home-1-twoTone.svg
   SvgGenImage get home1TwoTone =>
       const SvgGenImage('assets/icons/home-1-twoTone.svg');
+
+  /// File path: assets/icons/message-twoTone.svg
+  SvgGenImage get messageTwoTone =>
+      const SvgGenImage('assets/icons/message-twoTone.svg');
+
+  /// File path: assets/icons/more-square-twoTone.svg
+  SvgGenImage get moreSquareTwoTone =>
+      const SvgGenImage('assets/icons/more-square-twoTone.svg');
 
   /// File path: assets/icons/profile-bulk.svg
   SvgGenImage get profileBulk =>
@@ -60,6 +83,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search-normal-1-twoTone.svg
   SvgGenImage get searchNormal1TwoTone =>
       const SvgGenImage('assets/icons/search-normal-1-twoTone.svg');
+
+  /// File path: assets/icons/send-2-twoTone.svg
+  SvgGenImage get send2TwoTone =>
+      const SvgGenImage('assets/icons/send-2-twoTone.svg');
 }
 
 class Assets {
