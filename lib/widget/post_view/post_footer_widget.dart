@@ -1,3 +1,4 @@
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,7 +83,21 @@ class PostFooterWidget extends StatelessWidget {
             ],
           ),
         ),
-        // create expandable text for show caption
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: ExpandableText(
+            delegate.caption,
+            expandText: Strs.moreStr.tr,
+            collapseText: Strs.lessStr.tr,
+            animation: true,
+            linkColor: Get.theme.colorScheme.primary,
+            hashtagStyle: const TextStyle(color: Colors.blue),
+            mentionStyle: const TextStyle(color: Colors.blue),
+            onHashtagTap: (hashtag) {},
+            onMentionTap: (mention) {},
+            
+          ),
+        ),
       ],
     );
   }

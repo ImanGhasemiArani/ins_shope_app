@@ -3,4 +3,6 @@ const Map<String, String> enUS = {
   'لایک': 'Likes',
   'دنبال کردن': 'Follow',
   'دنبال می کنید': 'unFollow',
+  'بیشتر': 'more',
+  'کمتر': 'less',
 };

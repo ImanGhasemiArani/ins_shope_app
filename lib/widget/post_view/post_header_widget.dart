@@ -40,7 +40,11 @@ class PostHeaderWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(width: 10),
-        const Text('•'),
+        Text(
+          '●',
+          style: Get.textTheme.caption
+              ?.copyWith(color: Get.theme.colorScheme.onSurface),
+        ),
         StatefulBuilder(builder: (context, setState) {
           return CupertinoButton(
             minSize: 0,
@@ -51,7 +55,8 @@ class PostHeaderWidget extends StatelessWidget {
             },
             child: Text(
               delegate.isFollowing ? Strs.followingStr.tr : Strs.followStr.tr,
-              style: Get.theme.textTheme.caption,
+              style: Get.theme.textTheme.caption
+                  ?.copyWith(color: Get.theme.colorScheme.onSurface),
             ),
           );
         }),

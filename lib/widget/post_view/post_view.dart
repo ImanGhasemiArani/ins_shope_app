@@ -33,17 +33,22 @@ class PostContentDelegate {
   final String location;
   final String profImgUrl;
   final String mediaUrl;
+  final String caption;
   final int likesCount;
   bool isFollowing;
   bool isLiked;
   bool isBookmarked;
+
+  final String productName;
 
   PostContentDelegate(
     this.username,
     this.location,
     this.profImgUrl,
     this.mediaUrl,
-    this.likesCount, {
+    this.caption,
+    this.likesCount,
+    this.productName, {
     this.isFollowing = false,
     this.isLiked = false,
     this.isBookmarked = false,

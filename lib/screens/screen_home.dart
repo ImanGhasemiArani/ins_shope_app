@@ -152,10 +152,12 @@ class BodyContent extends StatelessWidget {
             "Tehran, Iran",
             'https://picsum.photos/${Random().nextInt(50) + 50}/',
             'https://picsum.photos/${Random().nextInt(100) + 300}/',
+            "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
             Random().nextInt(10000),
             isFollowing: Random().nextBool(),
             isLiked: Random().nextBool(),
             isBookmarked: Random().nextBool(),
+            "کفش ورزشی",
           ),
         ),
       ),
@@ -182,3 +184,6 @@ class BodyContent extends StatelessWidget {
     );
   }
 }
+
+
+// https://static.videezy.com/system/resources/previews/000/004/298/original/22.mp4

@@ -5,4 +5,6 @@ class Strs {
   static const likeStr = 'لایک';
   static const followStr = 'دنبال کردن';
   static const followingStr = 'دنبال می کنید';
+  static const moreStr = 'بیشتر';
+  static const lessStr = 'کمتر';
 }
