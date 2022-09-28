@@ -49,6 +49,9 @@ dependencies:
   carousel_slider: ^4.1.1
   dots_indicator: ^2.1.0
   expandable_text: ^2.3.0
+  path: ^1.8.2
+  visibility_detector: ^0.3.3
+  better_player: ^0.0.83
 
 dev_dependencies:
   flutter_test:

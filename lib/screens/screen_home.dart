@@ -146,19 +146,35 @@ class BodyContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       sliver: PostListView(
         contentDelegates: List.generate(
-          20,
-          (index) => PostContentDelegate(
-            'Iman.Casper',
-            "Tehran, Iran",
-            'https://picsum.photos/${Random().nextInt(50) + 50}/',
-            'https://picsum.photos/${Random().nextInt(100) + 300}/',
-            "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
-            Random().nextInt(10000),
-            isFollowing: Random().nextBool(),
-            isLiked: Random().nextBool(),
-            isBookmarked: Random().nextBool(),
-            "کفش ورزشی",
-          ),
+          20 + 3,
+          (index) {
+            final String mediaLink;
+            if (index == 0) {
+              mediaLink =
+                  'https://s-v4.tamasha.com/statics/videos_file/9f/04/GKPn7_9f04a2fdcd701870780773e474f10dbf21144c30_n_360.mp4';
+            } else if (index == 1) {
+              mediaLink =
+                  'https://s-v52.tamasha.com/statics/videos_file/f1/d3/k5j2M_f1d3ee539ded921a4113ab14073b54adea6f0a2c_n_360.mp4';
+            } else if (index == 2) {
+              mediaLink =
+                  'https://s-v52.tamasha.com/statics/videos_file/dd/60/EBamR_dd60ca4399bbdaf927c4d0cedd1b698bd59e4d73_n_360.mp4';
+            } else {
+              mediaLink =
+                  'https://picsum.photos/${Random().nextInt(100) + 300}/';
+            }
+            return PostContentDelegate(
+              'Iman.Casper',
+              "Tehran, Iran",
+              'https://picsum.photos/${Random().nextInt(50) + 50}/',
+              mediaLink,
+              "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
+              Random().nextInt(10000),
+              isFollowing: Random().nextBool(),
+              isLiked: Random().nextBool(),
+              isBookmarked: Random().nextBool(),
+              "کفش ورزشی",
+            );
+          },
         ),
       ),
     );
@@ -184,6 +200,3 @@ class BodyContent extends StatelessWidget {
     );
   }
 }
-
-
-// https://static.videezy.com/system/resources/previews/000/004/298/original/22.mp4
