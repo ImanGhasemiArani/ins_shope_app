@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'post_footer_widget.dart';
 import 'post_header_widget.dart';
-import 'post_media_widget.dart';
+import 'post_media_widget/post_media_widget.dart';
 
 class PostView extends StatelessWidget {
   const PostView({super.key, required this.delegate});
@@ -19,7 +19,7 @@ class PostView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             PostHeaderWidget(delegate: delegate),
-            PostMediaWidget(delegate: delegate),
+            PostMediaWidgetDelegate(delegate: delegate),
             PostFooterWidget(delegate: delegate),
           ],
         ),

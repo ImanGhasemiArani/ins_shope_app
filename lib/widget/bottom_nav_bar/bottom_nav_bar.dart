@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +25,7 @@ class FNavBar extends StatelessWidget {
     var selectedItemIndex = initItemIndex.obs;
 
     return Card(
-      color: Get.theme.colorScheme.primary,
+      color: Get.theme.colorScheme.background,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
         child: Row(

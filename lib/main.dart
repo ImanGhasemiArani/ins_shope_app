@@ -17,7 +17,7 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
+    // statusBarIconBrightness: Brightness.light,
   ));
   await initBaseServices();
   runApp(const MainMaterial());
@@ -96,7 +96,7 @@ class Themes {
       ),
     ),
     appBarTheme: const AppBarTheme().copyWith(
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    //   systemOverlayStyle: SystemUiOverlayStyle.dark,
       color: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -139,7 +139,7 @@ class Themes {
       ),
     ),
     appBarTheme: const AppBarTheme().copyWith(
-      systemOverlayStyle: SystemUiOverlayStyle.light,
+    //   systemOverlayStyle: SystemUiOverlayStyle.light,
       color: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
