@@ -50,7 +50,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         useCache: true,
         key: widget.delegate.mediaUrl,
         preCacheSize: 3 * 1024 * 1024,
-        maxCacheSize: 1024 * 1024 * 1024,
+        maxCacheSize: 512 * 1024 * 1024,
         maxCacheFileSize: 50 * 1024 * 1024,
       ),
     );
