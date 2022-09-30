@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'post_media_widget.dart';
 
-class PostPictureWidget extends PostMediaWidget {
-  const PostPictureWidget({
+class PostPhotoWidget extends PostMediaWidget {
+  const PostPhotoWidget({
     super.key,
     required super.size,
     required super.delegate,

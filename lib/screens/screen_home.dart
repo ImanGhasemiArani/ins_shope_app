@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart' as p;
 
 import '../assets/assets.gen.dart';
 import '../lang/strs.dart';
@@ -107,7 +108,10 @@ class BodyContent extends StatelessWidget {
         SliverToBoxAdapter(
           child: configAnimation(const SizedBox(height: 10), 3),
         ),
-        _buildPostContent(),
+        SliverToBoxAdapter(
+          child: _buildSpecSalesContent(),
+        ),
+        // // _buildPostContent(),
         const SliverToBoxAdapter(child: SizedBox(height: 100)),
       ],
     );
@@ -129,12 +133,27 @@ class BodyContent extends StatelessWidget {
   }
 
   Widget _buildCarouselSlider() {
-    //if its used for slivers, this return should Wrap to SliverToBoxAdapter
+    // if its used for slivers, this return should Wrap to SliverToBoxAdapter
     return AdSliderView(
       contentDelegates: List.generate(
         5,
         (index) => AdSliderTileContentDelegate(
           'https://picsum.photos/${Random().nextInt(100) + 300}/150',
+          () {},
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSpecSalesContent() {
+    //if its used for slivers, this return should Wrap to SliverToBoxAdapter
+    return StoryListView(
+      storyTileSize: (Get.width - 40 * 2) / 6,
+      contentDelegates: List.generate(
+        20,
+        (index) => StoryTileContentDelegate(
+          'https://picsum.photos/${Random().nextInt(50) + 50}/',
+          index >= 3,
           () {},
         ),
       ),
@@ -169,10 +188,11 @@ class BodyContent extends StatelessWidget {
               mediaLink,
               "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
               Random().nextInt(10000),
+              "کفش ورزشی",
+              PostMediaType.fromExtension(p.extension(mediaLink)),
               isFollowing: Random().nextBool(),
               isLiked: Random().nextBool(),
               isBookmarked: Random().nextBool(),
-              "کفش ورزشی",
             );
           },
         ),

@@ -2,7 +2,6 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart' as p;
 
 import '../../../assets/assets.gen.dart';
 import '../../../services/localization_service.dart';
@@ -22,15 +21,13 @@ class PostMediaWidgetDelegate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaType =
-        PostMediaType.fromExtension(p.extension(delegate.mediaUrl));
-    switch (mediaType) {
-      case PostMediaType.picture:
-        return PostPictureWidget(delegate: delegate, size: size);
+    switch (delegate.mediaType) {
+      case PostMediaType.photo:
+        return PostPhotoWidget(delegate: delegate, size: size);
       case PostMediaType.video:
         return PostVideoWidget(delegate: delegate, size: size);
       default:
-        return PostPictureWidget(delegate: delegate, size: size);
+        return PostEmptyWidget(size: size, delegate: delegate);
     }
   }
 }
@@ -125,20 +122,20 @@ abstract class PostMediaWidget extends StatelessWidget {
   void onProductBtnPressed() {}
 }
 
-enum PostMediaType {
-  picture(['jpg', 'jpeg', 'png']),
-  video(['mp4']);
+class PostEmptyWidget extends PostMediaWidget {
+  const PostEmptyWidget({
+    super.key,
+    required super.size,
+    required super.delegate,
+  });
 
-  const PostMediaType(this.supportedExtensions);
-  final List<String> supportedExtensions;
+  @override
+  Widget buildMediaContent() {
+    return const SizedBox();
+  }
 
-  static PostMediaType? fromExtension(String extension) {
-    extension = extension.toLowerCase().replaceAll('.', '');
-    for (final type in values) {
-      if (type.supportedExtensions.contains(extension)) {
-        return type;
-      }
-    }
-    return null;
+  @override
+  Widget buildProductLinkerContent() {
+    return const SizedBox();
   }
 }
