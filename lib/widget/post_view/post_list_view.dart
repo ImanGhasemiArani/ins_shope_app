@@ -22,7 +22,7 @@ class PostListView extends StatelessWidget {
           //         contentDelegates: contentDelegates, index: index),
           (context, index) => AnimationConfiguration.staggeredList(
             duration: const Duration(milliseconds: 500),
-            position: index + 2,
+            position: index + 3,
             child: SlideAnimation(
               horizontalOffset: 50 *
                   (LocalizationService.textDirection == TextDirection.ltr

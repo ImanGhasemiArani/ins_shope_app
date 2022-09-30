@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../assets/assets.gen.dart';
 import '../../lang/strs.dart';
 import 'post_view.dart';
 
@@ -63,10 +63,8 @@ class PostHeaderWidget extends StatelessWidget {
         const Spacer(),
         CupertinoButton(
           onPressed: onMoreBtnPressed,
-          child: Icon(
-            Icons.more_horiz_rounded,
-            color: Get.theme.colorScheme.onSurface,
-          ),
+          child: Assets.icons.more2TwoTone
+              .svg(color: Get.theme.colorScheme.onSurface),
         ),
       ],
     );

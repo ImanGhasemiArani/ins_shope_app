@@ -71,20 +71,25 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         }
       },
     );
-    _controller = BetterPlayerController(
-      config,
-      betterPlayerDataSource: dataSource,
+    Future.delayed(
+      const Duration(milliseconds: 1000),
+      () {
+        _controller = BetterPlayerController(
+          config,
+          betterPlayerDataSource: dataSource,
+        );
+        bool isInit = false;
+        _controller.videoPlayerController?.addListener(() {
+          try {
+            if (_controller.isVideoInitialized()! != isInit) {
+              setState(() {
+                isInit = _controller.isVideoInitialized()!;
+              });
+            }
+          } catch (e) {}
+        });
+      },
     );
-    bool isInit = false;
-    _controller.videoPlayerController?.addListener(() {
-      try {
-        if (_controller.isVideoInitialized()! != isInit) {
-          setState(() {
-            isInit = _controller.isVideoInitialized()!;
-          });
-        }
-      } catch (e) {}
-    });
   }
 
   @override
@@ -95,23 +100,28 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        if (_controller.isVideoInitialized()!)
-          GestureDetector(
-            onTap: () {
-              _controller.isPlaying()!
-                  ? _controller.pause()
-                  : _controller.play();
-            },
-            child: AspectRatio(
-              aspectRatio: 1 / 1,
-              child: BetterPlayer(controller: _controller),
-            ),
-          )
-        else
-          const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-      ],
+    return FutureBuilder(
+      future:
+          Future.sync(() => Future.delayed(const Duration(milliseconds: 1000))),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return _controller.isVideoInitialized()!
+              ? GestureDetector(
+                  onTap: () {
+                    _controller.isPlaying()!
+                        ? _controller.pause()
+                        : _controller.play();
+                  },
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: BetterPlayer(controller: _controller),
+                  ),
+                )
+              : const Center(child: CircularProgressIndicator(strokeWidth: 2));
+        } else {
+          return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+        }
+      },
     );
   }
 }

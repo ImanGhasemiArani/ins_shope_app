@@ -14,6 +14,10 @@ import 'package:flutter/services.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/arrow-circle-left-twoTone.svg
+  SvgGenImage get arrowCircleLeftTwoTone =>
+      const SvgGenImage('assets/icons/arrow-circle-left-twoTone.svg');
+
   /// File path: assets/icons/bag-2-bulk.svg
   SvgGenImage get bag2Bulk => const SvgGenImage('assets/icons/bag-2-bulk.svg');
 
@@ -64,9 +68,9 @@ class $AssetsIconsGen {
   SvgGenImage get messageTwoTone =>
       const SvgGenImage('assets/icons/message-twoTone.svg');
 
-  /// File path: assets/icons/more-square-twoTone.svg
-  SvgGenImage get moreSquareTwoTone =>
-      const SvgGenImage('assets/icons/more-square-twoTone.svg');
+  /// File path: assets/icons/more-2-twoTone.svg
+  SvgGenImage get more2TwoTone =>
+      const SvgGenImage('assets/icons/more-2-twoTone.svg');
 
   /// File path: assets/icons/profile-bulk.svg
   SvgGenImage get profileBulk =>
@@ -170,7 +174,7 @@ class SvgGenImage {
     String? package,
     double width = 24,
     double height = 24,
-    BoxFit fit = BoxFit.scaleDown,
+    BoxFit fit = BoxFit.contain,
     AlignmentGeometry alignment = Alignment.center,
     bool allowDrawingOutsideViewBox = false,
     WidgetBuilder? placeholderBuilder,

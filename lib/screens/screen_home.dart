@@ -15,6 +15,8 @@ import '../widget/ad_slider_widget/ad_slider_view.dart';
 import '../widget/my_app_bar/my_app_bar.dart';
 import '../widget/post_view/post_list_view.dart';
 import '../widget/post_view/post_view.dart';
+import '../widget/special_offers_content.dart/special_offers_list_view.dart';
+import '../widget/special_offers_content.dart/special_offers_tile.dart';
 import '../widget/story_content_Widget/story_list_view.dart';
 import '../widget/story_content_Widget/story_tile.dart';
 
@@ -96,22 +98,14 @@ class BodyContent extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       clipBehavior: Clip.none,
       slivers: [
+        SliverToBoxAdapter(child: _buildStoryContent()),
+        const SliverToBoxAdapter(child: SizedBox(height: 25)),
         SliverToBoxAdapter(
-          child: _buildStoryContent(),
-        ),
-        SliverToBoxAdapter(
-          child: configAnimation(const SizedBox(height: 25), 1),
-        ),
-        SliverToBoxAdapter(
-          child: configAnimation(_buildCarouselSlider(), 2, hO: 0, vO: 50),
-        ),
-        SliverToBoxAdapter(
-          child: configAnimation(const SizedBox(height: 10), 3),
-        ),
-        SliverToBoxAdapter(
-          child: _buildSpecSalesContent(),
-        ),
-        // // _buildPostContent(),
+            child: configAnimation(_buildCarouselSlider(), 1, hO: 0, vO: 50)),
+        const SliverToBoxAdapter(child: SizedBox(height: 15)),
+        SliverToBoxAdapter(child: _buildSpecOffersContent()),
+        const SliverToBoxAdapter(child: SizedBox(height: 15)),
+        _buildPostContent(),
         const SliverToBoxAdapter(child: SizedBox(height: 100)),
       ],
     );
@@ -124,7 +118,7 @@ class BodyContent extends StatelessWidget {
       contentDelegates: List.generate(
         20,
         (index) => StoryTileContentDelegate(
-          'https://picsum.photos/${Random().nextInt(50) + 50}/',
+          'https://picsum.photos/${Random().nextInt(50) + 50}',
           index >= 3,
           () {},
         ),
@@ -138,22 +132,22 @@ class BodyContent extends StatelessWidget {
       contentDelegates: List.generate(
         5,
         (index) => AdSliderTileContentDelegate(
-          'https://picsum.photos/${Random().nextInt(100) + 300}/150',
+          'https://picsum.photos/${Random().nextInt(50) + 300}/150',
           () {},
         ),
       ),
     );
   }
 
-  Widget _buildSpecSalesContent() {
+  Widget _buildSpecOffersContent() {
     //if its used for slivers, this return should Wrap to SliverToBoxAdapter
-    return StoryListView(
-      storyTileSize: (Get.width - 40 * 2) / 6,
+    return SpecOffersListView(
       contentDelegates: List.generate(
         20,
-        (index) => StoryTileContentDelegate(
-          'https://picsum.photos/${Random().nextInt(50) + 50}/',
-          index >= 3,
+        (index) => SpecOffersTileContentDelegate(
+          "کفش ورزشی آدیداس مدل تام کروز",
+          'https://picsum.photos/${Random().nextInt(50) + 100}',
+          "200,000",
           () {},
         ),
       ),
@@ -179,12 +173,12 @@ class BodyContent extends StatelessWidget {
                   'https://s-v52.tamasha.com/statics/videos_file/dd/60/EBamR_dd60ca4399bbdaf927c4d0cedd1b698bd59e4d73_n_360.mp4';
             } else {
               mediaLink =
-                  'https://picsum.photos/${Random().nextInt(100) + 300}/';
+                  'https://picsum.photos/${Random().nextInt(100) + 300}';
             }
             return PostContentDelegate(
               'Iman.Casper',
               "Tehran, Iran",
-              'https://picsum.photos/${Random().nextInt(50) + 50}/',
+              'https://picsum.photos/${Random().nextInt(50) + 50}',
               mediaLink,
               "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
               Random().nextInt(10000),

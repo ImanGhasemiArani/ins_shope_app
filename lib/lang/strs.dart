@@ -7,4 +7,5 @@ class Strs {
   static const followingStr = 'دنبال می کنید';
   static const moreStr = 'بیشتر';
   static const lessStr = 'کمتر';
+  static const specialOffersStr = 'پیشنهاد\nشگفت\nانگیز';
 }

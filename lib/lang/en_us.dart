@@ -5,4 +5,5 @@ const Map<String, String> enUS = {
   'دنبال می کنید': 'unFollow',
   'بیشتر': 'more',
   'کمتر': 'less',
+  'پیشنهاد\nشگفت\nانگیز': 'Special\nOffers',
 };
