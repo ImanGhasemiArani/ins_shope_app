@@ -1,25 +1,18 @@
-import 'dart:math';
-
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart' as p;
 
 import '../assets/assets.gen.dart';
 import '../lang/strs.dart';
 import '../services/localization_service.dart';
-import '../widget/ad_slider_widget/ad_slider_tile.dart';
+import '../utils/fake_data_generator.dart';
 import '../widget/ad_slider_widget/ad_slider_view.dart';
 import '../widget/my_app_bar/my_app_bar.dart';
 import '../widget/post_view/post_list_view.dart';
-import '../widget/post_view/post_view.dart';
-import '../widget/price_view/price_view.dart';
 import '../widget/special_offers_content.dart/special_offers_list_view.dart';
-import '../widget/special_offers_content.dart/special_offers_tile.dart';
 import '../widget/story_content_Widget/story_list_view.dart';
-import '../widget/story_content_Widget/story_tile.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -95,20 +88,29 @@ class BodyContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
-      clipBehavior: Clip.none,
-      slivers: [
-        SliverToBoxAdapter(child: _buildStoryContent()),
-        const SliverToBoxAdapter(child: SizedBox(height: 25)),
-        SliverToBoxAdapter(
-            child: configAnimation(_buildCarouselSlider(), 1, hO: 0, vO: 50)),
-        const SliverToBoxAdapter(child: SizedBox(height: 15)),
-        SliverToBoxAdapter(child: _buildSpecOffersContent()),
-        const SliverToBoxAdapter(child: SizedBox(height: 15)),
-        _buildPostContent(),
-        const SliverToBoxAdapter(child: SizedBox(height: 100)),
-      ],
+    return NotificationListener<ScrollEndNotification>(
+      child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        clipBehavior: Clip.none,
+        slivers: [
+          SliverToBoxAdapter(child: _buildStoryContent()),
+          const SliverToBoxAdapter(child: SizedBox(height: 25)),
+          SliverToBoxAdapter(
+              child: configAnimation(_buildCarouselSlider(), 1, hO: 0, vO: 50)),
+          const SliverToBoxAdapter(child: SizedBox(height: 15)),
+          SliverToBoxAdapter(child: _buildSpecOffersContent()),
+          const SliverToBoxAdapter(child: SizedBox(height: 15)),
+          _buildPostContent(),
+          const SliverToBoxAdapter(child: SizedBox(height: 100)),
+        ],
+      ),
+      onNotification: (notification) {
+        if (notification.metrics.pixels ==
+            notification.metrics.maxScrollExtent) {
+          _loadMorePost();
+        }
+        return false;
+      },
     );
   }
 
@@ -116,46 +118,21 @@ class BodyContent extends StatelessWidget {
     //if its used for slivers, this return should Wrap to SliverToBoxAdapter
     return StoryListView(
       storyTileSize: (Get.width - 40 * 2) / 6,
-      contentDelegates: List.generate(
-        20,
-        (index) => StoryTileContentDelegate(
-          'https://picsum.photos/${Random().nextInt(50) + 50}',
-          index >= 3,
-          () {},
-        ),
-      ),
+      contentDelegates: FkDataGenerator.generateStoryContentsDelegate(),
     );
   }
 
   Widget _buildCarouselSlider() {
     // if its used for slivers, this return should Wrap to SliverToBoxAdapter
     return AdSliderView(
-      contentDelegates: List.generate(
-        5,
-        (index) => AdSliderTileContentDelegate(
-          'https://picsum.photos/${Random().nextInt(50) + 300}/150',
-          () {},
-        ),
-      ),
+      contentDelegates: FkDataGenerator.generateAdContentsDelegate(),
     );
   }
 
   Widget _buildSpecOffersContent() {
     //if its used for slivers, this return should Wrap to SliverToBoxAdapter
     return SpecOffersListView(
-      contentDelegates: List.generate(
-        20,
-        (index) => SpecOffersTileContentDelegate(
-          "کفش ورزشی آدیداس مدل تام کروز",
-          'https://picsum.photos/${Random().nextInt(50) + 100}',
-          PriceContentDelegate(
-            Random().nextInt(10000) * 1000,
-            haveDiscount: true,
-            discountPercent: Random().nextInt(100),
-          ),
-          () {},
-        ),
-      ),
+      contentDelegates: FkDataGenerator.generateSpecContentsDelegate(),
     );
   }
 
@@ -163,38 +140,7 @@ class BodyContent extends StatelessWidget {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       sliver: PostListView(
-        contentDelegates: List.generate(
-          20 + 3,
-          (index) {
-            final String mediaLink;
-            if (index == 0) {
-              mediaLink =
-                  'https://s-v4.tamasha.com/statics/videos_file/9f/04/GKPn7_9f04a2fdcd701870780773e474f10dbf21144c30_n_360.mp4';
-            } else if (index == 1) {
-              mediaLink =
-                  'https://s-v52.tamasha.com/statics/videos_file/f1/d3/k5j2M_f1d3ee539ded921a4113ab14073b54adea6f0a2c_n_360.mp4';
-            } else if (index == 2) {
-              mediaLink =
-                  'https://s-v52.tamasha.com/statics/videos_file/dd/60/EBamR_dd60ca4399bbdaf927c4d0cedd1b698bd59e4d73_n_360.mp4';
-            } else {
-              mediaLink =
-                  'https://picsum.photos/${Random().nextInt(100) + 300}';
-            }
-            return PostContentDelegate(
-              'Iman.Casper',
-              "Tehran, Iran",
-              'https://picsum.photos/${Random().nextInt(50) + 50}',
-              mediaLink,
-              "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
-              Random().nextInt(10000),
-              "کفش ورزشی",
-              PostMediaType.fromExtension(p.extension(mediaLink)),
-              isFollowing: Random().nextBool(),
-              isLiked: Random().nextBool(),
-              isBookmarked: Random().nextBool(),
-            );
-          },
-        ),
+        contentDelegates: FkDataGenerator.generatePostContentsDelegate(),
       ),
     );
   }
@@ -216,6 +162,15 @@ class BodyContent extends StatelessWidget {
           child: child,
         ),
       ),
+    );
+  }
+
+  void _loadMorePost() {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        lazyList.addAll(FkDataGenerator.generatePostContentsDelegate());
+      },
     );
   }
 }

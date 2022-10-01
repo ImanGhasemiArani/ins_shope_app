@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../services/localization_service.dart';
 import 'post_view.dart';
+
+var lazyList = [].obs;
 
 class PostListView extends StatelessWidget {
   const PostListView({
@@ -14,69 +18,39 @@ class PostListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    lazyList = contentDelegates.obs;
     return AnimationLimiter(
-      child: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          //   //   for AutomaticKeepAlive Posts we should use bellow block
-          //     (context, index) => ListItemWithAutoKeepAlive(
-          //         contentDelegates: contentDelegates, index: index),
-          (context, index) => AnimationConfiguration.staggeredList(
-            duration: const Duration(milliseconds: 500),
-            position: index + 3,
-            child: SlideAnimation(
-              horizontalOffset: 50 *
-                  (LocalizationService.textDirection == TextDirection.ltr
-                      ? -1
-                      : 1),
-              child: FadeInAnimation(
-                child: PostView(
-                  delegate: contentDelegates[index],
+      child: Obx(
+        () => SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return AnimationConfiguration.staggeredList(
+                duration: const Duration(milliseconds: 500),
+                position: index + 3,
+                child: SlideAnimation(
+                  horizontalOffset: 50 *
+                      (LocalizationService.textDirection == TextDirection.ltr
+                          ? -1
+                          : 1),
+                  child: FadeInAnimation(
+                    child: index != lazyList.length
+                        ? PostView(
+                            delegate: lazyList[index],
+                          )
+                        : Center(
+                            child: LoadingAnimationWidget.waveDots(
+                              color: Get.theme.colorScheme.primary,
+                              size: 40,
+                            ),
+                          ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          childCount: contentDelegates.length,
-        ),
-      ),
-    );
-  }
-}
-
-class ListItemWithAutoKeepAlive extends StatefulWidget {
-  const ListItemWithAutoKeepAlive({
-    Key? key,
-    required this.contentDelegates,
-    required this.index,
-  }) : super(key: key);
-
-  final int index;
-  final List<PostContentDelegate> contentDelegates;
-
-  @override
-  State<ListItemWithAutoKeepAlive> createState() =>
-      _ListItemWithAutoKeepAliveState();
-}
-
-class _ListItemWithAutoKeepAliveState extends State<ListItemWithAutoKeepAlive>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return AnimationConfiguration.staggeredList(
-      duration: const Duration(milliseconds: 500),
-      position: widget.index + 2,
-      child: SlideAnimation(
-        horizontalOffset: 50 *
-            (LocalizationService.textDirection == TextDirection.ltr ? -1 : 1),
-        child: FadeInAnimation(
-          child: PostView(
-            delegate: widget.contentDelegates[widget.index],
+              );
+            },
+            childCount: lazyList.length + 1,
           ),
         ),
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -6,5 +6,5 @@ const Map<String, String> enUS = {
   'بیشتر': 'more',
   'کمتر': 'less',
   'پیشنهاد\nشگفت\nانگیز': 'Special\nOffers',
-  'تومان': 'Toman',
+  'ت': 'T',
 };
