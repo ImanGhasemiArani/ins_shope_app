@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../price_view/price_view.dart';
+
 class SpecOffersTile extends StatelessWidget {
   const SpecOffersTile({
     super.key,
@@ -54,11 +56,8 @@ class SpecOffersTile extends StatelessWidget {
                 const SizedBox(height: 15),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    delegate.productPrice,
-                    style: Get.textTheme.bodyText2,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: OfferPriceView(
+                    contentDelegate: delegate.priceContentDelegate
                   ),
                 ),
               ],
@@ -75,13 +74,13 @@ typedef OnSpecOffersTilePressed = void Function();
 class SpecOffersTileContentDelegate {
   final String productName;
   final String productImgUrl;
-  final String productPrice;
+  final PriceContentDelegate priceContentDelegate;
   final OnSpecOffersTilePressed onStoryTilePressed;
 
   SpecOffersTileContentDelegate(
     this.productName,
     this.productImgUrl,
-    this.productPrice,
+    this.priceContentDelegate,
     this.onStoryTilePressed,
   );
 }

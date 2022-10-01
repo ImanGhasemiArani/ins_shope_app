@@ -15,6 +15,7 @@ import '../widget/ad_slider_widget/ad_slider_view.dart';
 import '../widget/my_app_bar/my_app_bar.dart';
 import '../widget/post_view/post_list_view.dart';
 import '../widget/post_view/post_view.dart';
+import '../widget/price_view/price_view.dart';
 import '../widget/special_offers_content.dart/special_offers_list_view.dart';
 import '../widget/special_offers_content.dart/special_offers_tile.dart';
 import '../widget/story_content_Widget/story_list_view.dart';
@@ -147,7 +148,11 @@ class BodyContent extends StatelessWidget {
         (index) => SpecOffersTileContentDelegate(
           "کفش ورزشی آدیداس مدل تام کروز",
           'https://picsum.photos/${Random().nextInt(50) + 100}',
-          "200,000",
+          PriceContentDelegate(
+            Random().nextInt(10000) * 1000,
+            haveDiscount: true,
+            discountPercent: Random().nextInt(100),
+          ),
           () {},
         ),
       ),

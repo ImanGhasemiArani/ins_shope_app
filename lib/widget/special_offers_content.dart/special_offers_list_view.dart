@@ -23,8 +23,7 @@ class SpecOffersListView extends StatelessWidget {
           15 +
           _textSize('\n\n', Get.textTheme.bodyText1, tileHeight).height +
           15 +
-          _textSize('\n', Get.textTheme.bodyText1, tileHeight, maxLines: 1)
-              .height +
+          _textSize('\n\n', Get.textTheme.bodyText1, tileHeight).height +
           20,
       child: AnimationLimiter(
         child: ListView.builder(

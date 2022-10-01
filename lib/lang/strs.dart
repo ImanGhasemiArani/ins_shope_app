@@ -8,4 +8,5 @@ class Strs {
   static const moreStr = 'بیشتر';
   static const lessStr = 'کمتر';
   static const specialOffersStr = 'پیشنهاد\nشگفت\nانگیز';
+  static const currencyStr = 'تومان';
 }
