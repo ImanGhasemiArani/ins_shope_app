@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../services/localization_service.dart';
+import '../../services/player_controller_services.dart';
 import 'post_view.dart';
 
 var lazyList = [].obs;
 
-class PostListView extends StatelessWidget {
+class PostListView extends StatefulWidget {
   const PostListView({
     super.key,
     required this.contentDelegates,
@@ -17,8 +18,19 @@ class PostListView extends StatelessWidget {
   final List<PostContentDelegate> contentDelegates;
 
   @override
+  State<PostListView> createState() => _PostListViewState();
+}
+
+class _PostListViewState extends State<PostListView> {
+  @override
+  void dispose() {
+    PlayerControllerServices().dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    lazyList = contentDelegates.obs;
+    lazyList = widget.contentDelegates.obs;
     return AnimationLimiter(
       child: Obx(
         () => SliverList(

@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:better_player/better_player.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../../services/player_controller_services.dart';
 import '../post_view.dart';
 import 'post_media_widget.dart';
 
@@ -37,13 +41,25 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late final BetterPlayerController _controller;
+  BetterPlayerController? _controller;
+  late final BetterPlayerDataSource dataSource;
+  final config = const BetterPlayerConfiguration(
+    autoDispose: false,
+    aspectRatio: 1 / 1,
+    fit: BoxFit.cover,
+    looping: true,
+    allowedScreenSleep: false,
+    controlsConfiguration: BetterPlayerControlsConfiguration(
+      showControls: false,
+    ),
+  );
+  final StreamController<BetterPlayerController?>
+      playerControllerStreamController = StreamController.broadcast();
 
   @override
   void initState() {
     super.initState();
-
-    final dataSource = BetterPlayerDataSource(
+    dataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       widget.delegate.mediaUrl,
       cacheConfiguration: BetterPlayerCacheConfiguration(
@@ -54,74 +70,82 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         maxCacheFileSize: 50 * 1024 * 1024,
       ),
     );
-    final config = BetterPlayerConfiguration(
-      aspectRatio: 1 / 1,
-      fit: BoxFit.cover,
-      autoDispose: true,
-      looping: true,
-      allowedScreenSleep: false,
-      controlsConfiguration: const BetterPlayerControlsConfiguration(
-        showControls: false,
-      ),
-      playerVisibilityChangedBehavior: (visibleFraction) {
-        if (visibleFraction < 1 && _controller.isPlaying()!) {
-          _controller.pause();
-        } else if (visibleFraction >= 1 && !_controller.isPlaying()!) {
-          _controller.play();
-        }
-      },
-    );
-    Future.delayed(
-      const Duration(milliseconds: 1000),
-      () {
-        _controller = BetterPlayerController(
-          config,
-          betterPlayerDataSource: dataSource,
-        );
-        bool isInit = false;
-        _controller.videoPlayerController?.addListener(() {
-          try {
-            if (_controller.isVideoInitialized()! != isInit) {
-              setState(() {
-                isInit = _controller.isVideoInitialized()!;
-              });
-            }
-          } catch (e) {}
-        });
-      },
-    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    playerControllerStreamController.close();
     super.dispose();
+  }
+
+  void _setupController() {
+    if (_controller == null) {
+      _controller = PlayerControllerServices().getInstanceController(config);
+      if (_controller != null) {
+        _controller?.setupDataSource(dataSource);
+        _controller?.addEventsListener(_onPlayerEvent);
+        if (!playerControllerStreamController.isClosed) {
+          playerControllerStreamController.add(_controller);
+        }
+      }
+    }
+  }
+
+  void _freeController() {
+    if (_controller != null && (_controller?.isVideoInitialized() ?? false)) {
+      _controller?.removeEventsListener(_onPlayerEvent);
+      PlayerControllerServices().freeController(_controller);
+      _controller?.pause();
+      _controller = null;
+      if (!playerControllerStreamController.isClosed) {
+        playerControllerStreamController.add(null);
+      }
+    }
+  }
+
+  void _onPlayerEvent(BetterPlayerEvent event) {
+    if (event.betterPlayerEventType == BetterPlayerEventType.initialized) {
+      if (!(_controller?.isPlaying() ?? false)) {
+        PlayerControllerServices().currentPlayingController = _controller;
+        _controller?.play();
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future:
-          Future.sync(() => Future.delayed(const Duration(milliseconds: 1000))),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return _controller.isVideoInitialized()!
-              ? GestureDetector(
-                  onTap: () {
-                    _controller.isPlaying()!
-                        ? _controller.pause()
-                        : _controller.play();
-                  },
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: BetterPlayer(controller: _controller),
-                  ),
-                )
-              : const Center(child: CircularProgressIndicator(strokeWidth: 2));
+    return VisibilityDetector(
+      key: Key(hashCode.toString() + DateTime.now().toString()),
+      onVisibilityChanged: (info) {
+        if (info.visibleFraction >= 0.6) {
+          _setupController();
         } else {
-          return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+          _freeController();
         }
       },
+      child: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: StreamBuilder<BetterPlayerController?>(
+          stream: playerControllerStreamController.stream,
+          builder: (context, snapshot) {
+            return _controller != null
+                ? GestureDetector(
+                    onTap: () {
+                      _controller?.isPlaying() ?? false
+                          ? _controller?.pause()
+                          : _controller?.play();
+                    },
+                    child: AspectRatio(
+                      aspectRatio: 1 / 1,
+                      child: BetterPlayer(controller: _controller!),
+                    ),
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2));
+          },
+        ),
+      ),
     );
   }
 }
