@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:better_player/better_player.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../services/player_controller_services.dart';
@@ -41,6 +43,7 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
+  Uint8List? thumbnail;
   BetterPlayerController? _controller;
   late final BetterPlayerDataSource dataSource;
   final config = const BetterPlayerConfiguration(
@@ -106,10 +109,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void _onPlayerEvent(BetterPlayerEvent event) {
     if (event.betterPlayerEventType == BetterPlayerEventType.initialized) {
       if (!(_controller?.isPlaying() ?? false)) {
-        PlayerControllerServices().currentPlayingController = _controller;
-        _controller?.play();
+        _playVideo();
       }
     }
+  }
+
+  void _playVideo() {
+    PlayerControllerServices().currentPlayingController = _controller;
+    _controller?.play();
+  }
+
+  void _pauseVideo() {
+    _controller?.pause();
   }
 
   @override
@@ -126,24 +137,54 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       child: SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child: StreamBuilder<BetterPlayerController?>(
-          stream: playerControllerStreamController.stream,
-          builder: (context, snapshot) {
-            return _controller != null
-                ? GestureDetector(
-                    onTap: () {
-                      _controller?.isPlaying() ?? false
-                          ? _controller?.pause()
-                          : _controller?.play();
-                    },
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: BetterPlayer(controller: _controller!),
+        child: Stack(
+          children: [
+            AspectRatio(
+              aspectRatio: 1 / 1,
+              child: thumbnail == null
+                  ? FutureBuilder(
+                      future: Future.sync(
+                          () async => await VideoThumbnail.thumbnailData(
+                                video: widget.delegate.mediaUrl,
+                              )),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done &&
+                            snapshot.hasData) {
+                          thumbnail = snapshot.data as Uint8List;
+                          return Image.memory(
+                            thumbnail!,
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    )
+                  : Image.memory(
+                      thumbnail!,
+                      fit: BoxFit.cover,
                     ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(strokeWidth: 2));
-          },
+            ),
+            StreamBuilder<BetterPlayerController?>(
+              stream: playerControllerStreamController.stream,
+              builder: (context, snapshot) {
+                return _controller != null
+                    ? GestureDetector(
+                        onTap: () {
+                          _controller?.isPlaying() ?? false
+                              ? _pauseVideo()
+                              : _playVideo();
+                        },
+                        child: AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: BetterPlayer(controller: _controller!),
+                        ),
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2));
+              },
+            ),
+          ],
         ),
       ),
     );
