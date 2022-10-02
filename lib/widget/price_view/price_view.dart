@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../lang/strs.dart';
 import '../../services/localization_service.dart';
+import '../../utils/extension.dart';
 
 abstract class PriceView extends StatelessWidget {
   const PriceView({
@@ -42,14 +43,15 @@ class OfferPriceView extends PriceView {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${contentDelegate.price * (100 - contentDelegate.discountPercent!) ~/ 100}',
+                  '${contentDelegate.price * (100 - contentDelegate.discountPercent!) ~/ 100}'
+                      .trNums(),
                   style: Get.textTheme.bodyText1,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  '${contentDelegate.price}',
+                  '${contentDelegate.price}'.trNums(),
                   style: Get.textTheme.bodyText2!.copyWith(
                     decoration: TextDecoration.lineThrough,
                   ),
@@ -84,7 +86,7 @@ class OfferPriceView extends PriceView {
             ),
             padding: const EdgeInsets.all(5),
             child: Text(
-              '${contentDelegate.discountPercent!}%',
+              '${contentDelegate.discountPercent!}%'.trNums(),
               style: Get.textTheme.overline!.copyWith(
                 color: Colors.white,
               ),

@@ -97,10 +97,13 @@ class BodyContent extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 25)),
           SliverToBoxAdapter(
               child: configAnimation(_buildCarouselSlider(), 1, hO: 0, vO: 50)),
-          const SliverToBoxAdapter(child: SizedBox(height: 15)),
+          const SliverToBoxAdapter(child: SizedBox(height: 25)),
           SliverToBoxAdapter(child: _buildSpecOffersContent()),
           const SliverToBoxAdapter(child: SizedBox(height: 15)),
-          _buildPostContent(),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            sliver: _buildPostContent(),
+          ),
           const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
       ),
@@ -137,11 +140,8 @@ class BodyContent extends StatelessWidget {
   }
 
   Widget _buildPostContent() {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      sliver: PostListView(
-        contentDelegates: FkDataGenerator.generatePostContentsDelegate(),
-      ),
+    return PostListView(
+      contentDelegates: FkDataGenerator.generatePostContentsDelegate(),
     );
   }
 
