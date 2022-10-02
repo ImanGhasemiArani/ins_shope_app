@@ -32,11 +32,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
+    // compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     dexOptions {
-    javaMaxHeapSize "4g"
+        javaMaxHeapSize "4g"
     }
     
     compileOptions {
