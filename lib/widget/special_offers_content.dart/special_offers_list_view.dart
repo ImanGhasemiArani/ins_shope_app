@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -31,13 +33,16 @@ class SpecOffersListView extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          itemCount: contentDelegates.length + 2,
+          itemCount: min(contentDelegates.length, 10) + 2,
           itemBuilder: (context, index) {
             Widget child;
             if (index == 0) {
               child = _buildTitleWidget();
             } else {
               try {
+                if (min(contentDelegates.length, 10) < index) {
+                  throw Exception();
+                }
                 child = SpecOffersTile(
                   delegate: contentDelegates[index - 1],
                   imgSize: tileHeight,
@@ -111,6 +116,13 @@ class SpecOffersListView extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
+          ),
+          FittedBox(
+            child: Assets.icons.discountShapeTwoTone.svg(
+              height: tileHeight * 0.5,
+              width: tileHeight * 0.5,
+              color: CupertinoColors.destructiveRed,
+            ),
           ),
           _buildMoreBtn(),
         ],

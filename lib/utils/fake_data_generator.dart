@@ -26,7 +26,7 @@ class FkDataGenerator {
 
   static List<AdSliderTileContentDelegate> generateAdContentsDelegate() {
     return List.generate(
-      5,
+      Random().nextInt(10) + 1,
       (index) => AdSliderTileContentDelegate(
         'https://picsum.photos/${index + 500}/150',
         () {},
@@ -36,7 +36,7 @@ class FkDataGenerator {
 
   static List<SpecOffersTileContentDelegate> generateSpecContentsDelegate() {
     return List.generate(
-      10,
+      Random().nextInt(20),
       (index) => SpecOffersTileContentDelegate(
         "کفش ورزشی آدیداس مدل تام کروز",
         'https://picsum.photos/${index + 100}',

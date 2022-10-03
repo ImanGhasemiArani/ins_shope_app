@@ -49,6 +49,10 @@ class $AssetsIconsGen {
   SvgGenImage get directNotificationTwoTone =>
       const SvgGenImage('assets/icons/direct-notification-twoTone.svg');
 
+  /// File path: assets/icons/discount-shape-twoTone.svg
+  SvgGenImage get discountShapeTwoTone =>
+      const SvgGenImage('assets/icons/discount-shape-twoTone.svg');
+
   /// File path: assets/icons/heart-bulk.svg
   SvgGenImage get heartBulk => const SvgGenImage('assets/icons/heart-bulk.svg');
 
