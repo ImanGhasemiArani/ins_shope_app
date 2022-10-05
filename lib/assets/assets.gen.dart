@@ -49,6 +49,9 @@ class $AssetsIconsGen {
   SvgGenImage get profileBulk =>
       const SvgGenImage('assets/icons/profile-bulk.svg');
 
+  /// File path: assets/icons/camera.svg
+  SvgGenImage get camera => const SvgGenImage('assets/icons/camera.svg');
+
   /// File path: assets/icons/profile-twoTone.svg
   SvgGenImage get profileTwoTone =>
       const SvgGenImage('assets/icons/profile-twoTone.svg');
@@ -66,6 +69,11 @@ class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+
+  static const AssetGenImage userAvatar =
+      AssetGenImage('assets/images/user_avatar.png');
+
+  static const AssetGenImage img1 = AssetGenImage('assets/images/01.jpg');
 }
 
 class AssetGenImage {
