@@ -85,6 +85,10 @@ class FkDataGenerator {
     );
   }
 
+  /// generate formula for 2*2 video block: <p>
+  ///  <h3> T(1) = 0 <p>
+  ///       T(n) = T(n-1) + 9 + (-1)^n <p>
+  /// <h4> Each Time in loadMore func, The length of the generated list must be 18n.
   static List<ExplorePostContentDelegate> generateExplorePostContentDelegate() {
     final videoLink = [
       'https://s-v52.tamasha.com/statics/videos_file/84/c8/5Dw85_84c8af13b820e3645d8aad99a9ac229ee1193af2_n_360.mp4',
@@ -93,22 +97,29 @@ class FkDataGenerator {
       'https://s-v52.tamasha.com/statics/videos_file/dd/60/EBamR_dd60ca4399bbdaf927c4d0cedd1b698bd59e4d73_n_360.mp4',
       'https://s-v52.tamasha.com/statics/videos_file/67/05/b6E4b_6705b3637f1c9e3348930162837163d51924fabc_n_240.mp4',
     ];
+    int vIndex = 1, currentIndex = 0;
     return List.generate(
-      20,
+      18 * 1,
       (index) {
         final String mediaLink;
-        if (Random().nextInt(3) % 3 == 0) {
-          //   mediaLink = videoLink[Random().nextInt(videoLink.length)];
-          mediaLink = 'https://picsum.photos/${index + 200}';
+        if (index == currentIndex) {
+          mediaLink = videoLink[Random().nextInt(videoLink.length)];
+          vIndex++;
+          currentIndex += 9 + pow(-1, vIndex).toInt();
         } else {
-          mediaLink = 'https://picsum.photos/${index + 200}';
+          if (Random().nextInt(4) % 4 == 0) {
+            mediaLink = videoLink[Random().nextInt(videoLink.length)];
+          } else {
+            mediaLink = 'https://picsum.photos/${index + 500}';
+          }
         }
+
         return ExplorePostContentDelegate(
           mediaLink,
           PostMediaType.fromExtension(p.extension(mediaLink)),
           () {},
         );
       },
-    )..shuffle();
+    );
   }
 }

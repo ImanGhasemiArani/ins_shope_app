@@ -26,12 +26,23 @@ class ExploreListView extends StatelessWidget {
             crossAxisCount: 3,
             mainAxisSpacing: 5,
             crossAxisSpacing: 5,
-            repeatPattern: QuiltedGridRepeatPattern.inverted,
             pattern: const [
+              QuiltedGridTile(2, 2),
               QuiltedGridTile(1, 1),
               QuiltedGridTile(1, 1),
+              //
+              QuiltedGridTile(1, 1),
+              QuiltedGridTile(1, 1),
+              QuiltedGridTile(1, 1),
+              QuiltedGridTile(1, 1),
+              QuiltedGridTile(1, 1),
+              QuiltedGridTile(1, 1),
+              //
               QuiltedGridTile(1, 1),
               QuiltedGridTile(2, 2),
+              QuiltedGridTile(1, 1),
+              //
+              QuiltedGridTile(1, 1),
               QuiltedGridTile(1, 1),
               QuiltedGridTile(1, 1),
               QuiltedGridTile(1, 1),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../post_view/post_view.dart';
 import 'explore_image_post_view.dart';
+import 'explore_video_post_view.dart';
 
 class ExplorePostViewDelegate extends StatelessWidget {
   const ExplorePostViewDelegate({
@@ -20,7 +21,7 @@ class ExplorePostViewDelegate extends StatelessWidget {
         return ExploreImagePostView(delegate: delegate);
       case PostMediaType.video:
         // return ExploreVideoPostView(delegate: delegate);
-        return ExploreImagePostView(delegate: delegate);
+        return ExploreVideoPostView(delegate: delegate);
       case PostMediaType.none:
         //this because for invalid api image link it will return null for main link should remove
         return ExploreImagePostView(delegate: delegate);
