@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../assets/assets.gen.dart';
 import '../../lang/strs.dart';
 import '../../services/localization_service.dart';
-import 'special_offers_tile.dart';
+import 'special_offers_item.dart';
 
 class SpecOffersListView extends StatelessWidget {
   const SpecOffersListView({
@@ -15,17 +15,17 @@ class SpecOffersListView extends StatelessWidget {
     required this.contentDelegates,
   });
 
-  final List<SpecOffersTileContentDelegate> contentDelegates;
-  final double tileHeight = 150;
+  final List<SpecOffersItemContentDelegate> contentDelegates;
+  final double itemHeight = 150;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: tileHeight +
+      height: itemHeight +
           15 +
-          _textSize('\n\n', Get.textTheme.bodyText1, tileHeight).height +
+          _textSize('\n\n', Get.textTheme.bodyText1, itemHeight).height +
           15 +
-          _textSize('\n\n', Get.textTheme.bodyText1, tileHeight).height +
+          _textSize('\n\n', Get.textTheme.bodyText1, itemHeight).height +
           20,
       child: AnimationLimiter(
         child: ListView.builder(
@@ -43,9 +43,9 @@ class SpecOffersListView extends StatelessWidget {
                 if (min(contentDelegates.length, 10) < index) {
                   throw Exception();
                 }
-                child = SpecOffersTile(
+                child = SpecOffersItem(
                   delegate: contentDelegates[index - 1],
-                  imgSize: tileHeight,
+                  imgSize: itemHeight,
                 );
               } catch (e) {
                 child = _buildMoreBtn();
@@ -76,7 +76,7 @@ class SpecOffersListView extends StatelessWidget {
   Widget _buildMoreBtn() {
     return Center(
       child: SizedBox(
-        width: tileHeight + 20,
+        width: itemHeight + 20,
         child: CupertinoButton(
           onPressed: onMoreBtnPressed,
           child: Column(
@@ -104,7 +104,7 @@ class SpecOffersListView extends StatelessWidget {
 
   Widget _buildTitleWidget() {
     return SizedBox(
-      width: tileHeight + 20,
+      width: itemHeight + 20,
       height: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -119,8 +119,8 @@ class SpecOffersListView extends StatelessWidget {
           ),
           FittedBox(
             child: Assets.icons.discountShapeTwoTone.svg(
-              height: tileHeight * 0.5,
-              width: tileHeight * 0.5,
+              height: itemHeight * 0.5,
+              width: itemHeight * 0.5,
               color: CupertinoColors.destructiveRed,
             ),
           ),

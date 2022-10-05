@@ -2,21 +2,21 @@ import 'dart:math';
 
 import 'package:path/path.dart' as p;
 
-import '../widget/ad_slider_widget/ad_slider_tile.dart';
+import '../widget/ad_slider_widget/ad_slider_item.dart';
 import '../widget/post_view/post_view.dart';
 import '../widget/price_view/price_view.dart';
-import '../widget/special_offers_content.dart/special_offers_tile.dart';
-import '../widget/story_content_Widget/story_tile.dart';
+import '../widget/special_offers_content.dart/special_offers_item.dart';
+import '../widget/story_content_Widget/story_item.dart';
 
 class FkDataGenerator {
   FkDataGenerator._();
 
-  static List<StoryTileContentDelegate> generateStoryContentsDelegate() {
+  static List<StoryItemContentDelegate> generateStoryContentsDelegate() {
     final num = Random().nextInt(20) + 1;
     final num2 = Random().nextInt(num + 1);
     return List.generate(
       num,
-      (index) => StoryTileContentDelegate(
+      (index) => StoryItemContentDelegate(
         'https://picsum.photos/${index + 50}',
         index > num2,
         () {},
@@ -24,20 +24,20 @@ class FkDataGenerator {
     );
   }
 
-  static List<AdSliderTileContentDelegate> generateAdContentsDelegate() {
+  static List<AdSliderItemContentDelegate> generateAdContentsDelegate() {
     return List.generate(
       Random().nextInt(10) + 1,
-      (index) => AdSliderTileContentDelegate(
+      (index) => AdSliderItemContentDelegate(
         'https://picsum.photos/${index + 500}/150',
         () {},
       ),
     );
   }
 
-  static List<SpecOffersTileContentDelegate> generateSpecContentsDelegate() {
+  static List<SpecOffersItemContentDelegate> generateSpecContentsDelegate() {
     return List.generate(
       Random().nextInt(20),
-      (index) => SpecOffersTileContentDelegate(
+      (index) => SpecOffersItemContentDelegate(
         "کفش ورزشی آدیداس مدل تام کروز",
         'https://picsum.photos/${index + 100}',
         PriceContentDelegate(

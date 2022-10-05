@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'ad_slider_tile.dart';
+import 'ad_slider_item.dart';
 
 class AdSliderView extends StatelessWidget {
   const AdSliderView({
@@ -11,7 +11,7 @@ class AdSliderView extends StatelessWidget {
     this.height = 150,
   });
 
-  final List<AdSliderTileContentDelegate> contentDelegates;
+  final List<AdSliderItemContentDelegate> contentDelegates;
   final double height;
 
   @override
@@ -23,7 +23,7 @@ class AdSliderView extends StatelessWidget {
       itemBuilder: (context, index, realIndex) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: AdSliderTile(
+          child: AdSliderItem(
             delegate: contentDelegates[index],
             imgSize: Size(double.infinity, height),
           ),

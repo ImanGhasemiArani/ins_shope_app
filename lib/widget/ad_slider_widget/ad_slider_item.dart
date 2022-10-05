@@ -2,20 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AdSliderTile extends StatelessWidget {
-  const AdSliderTile({
+class AdSliderItem extends StatelessWidget {
+  const AdSliderItem({
     super.key,
     required this.delegate,
     required this.imgSize,
   });
 
-  final AdSliderTileContentDelegate delegate;
+  final AdSliderItemContentDelegate delegate;
   final Size imgSize;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      onPressed: delegate.onAdTilePressed,
+      onPressed: delegate.onAdItemPressed,
       minSize: 0,
       padding: EdgeInsets.zero,
       child: Card(
@@ -53,11 +53,11 @@ class AdSliderTile extends StatelessWidget {
   }
 }
 
-typedef OnAdTilePressed = void Function();
+typedef OnAdItemPressed = void Function();
 
-class AdSliderTileContentDelegate {
+class AdSliderItemContentDelegate {
   final String adImgUrl;
-  final OnAdTilePressed onAdTilePressed;
+  final OnAdItemPressed onAdItemPressed;
 
-  AdSliderTileContentDelegate(this.adImgUrl, this.onAdTilePressed);
+  AdSliderItemContentDelegate(this.adImgUrl, this.onAdItemPressed);
 }

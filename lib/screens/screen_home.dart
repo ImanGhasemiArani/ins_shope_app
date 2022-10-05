@@ -120,7 +120,7 @@ class BodyContent extends StatelessWidget {
   Widget _buildStoryContent() {
     //if its used for slivers, this return should Wrap to SliverToBoxAdapter
     return StoryListView(
-      storyTileSize: (Get.width - 40 * 2) / 6,
+      storyItemSize: (Get.width - 40 * 2) / 6,
       contentDelegates: FkDataGenerator.generateStoryContentsDelegate(),
     );
   }

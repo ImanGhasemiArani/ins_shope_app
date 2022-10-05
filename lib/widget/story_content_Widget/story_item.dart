@@ -4,21 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class StoryTile extends StatelessWidget {
-  const StoryTile({
+class StoryItem extends StatelessWidget {
+  const StoryItem({
     super.key,
     required this.delegate,
     required this.storkWidth,
     required this.imgSize,
   });
-  final StoryTileContentDelegate delegate;
+  final StoryItemContentDelegate delegate;
   final double imgSize;
   final double storkWidth;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      onPressed: delegate.onStoryTilePressed,
+      onPressed: delegate.onStoryItemPressed,
       minSize: 0,
       padding: EdgeInsets.zero,
       child: Container(
@@ -87,16 +87,16 @@ class StoryTile extends StatelessWidget {
   }
 }
 
-typedef OnStoryTilePressed = void Function();
+typedef OnStoryItemPressed = void Function();
 
-class StoryTileContentDelegate {
+class StoryItemContentDelegate {
   final String profImgUrl;
   final bool isViewed;
-  final OnStoryTilePressed onStoryTilePressed;
+  final OnStoryItemPressed onStoryItemPressed;
 
-  StoryTileContentDelegate(
+  StoryItemContentDelegate(
     this.profImgUrl,
     this.isViewed,
-    this.onStoryTilePressed,
+    this.onStoryItemPressed,
   );
 }

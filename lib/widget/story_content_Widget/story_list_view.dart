@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../services/localization_service.dart';
-import 'story_tile.dart';
+import 'story_item.dart';
 
 class StoryListView extends StatelessWidget {
   const StoryListView({
     super.key,
     required this.contentDelegates,
-    this.storyTileSize = 50,
+    this.storyItemSize = 50,
   });
 
-  final List<StoryTileContentDelegate> contentDelegates;
-  final double storyTileSize;
+  final List<StoryItemContentDelegate> contentDelegates;
+  final double storyItemSize;
   final double _storkWidth = 1.2;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: storyTileSize + _storkWidth * 4,
+      height: storyItemSize + _storkWidth * 4,
       child: AnimationLimiter(
         child: ListView.builder(
           clipBehavior: Clip.none,
@@ -38,10 +38,10 @@ class StoryListView extends StatelessWidget {
                 child: FadeInAnimation(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: StoryTile(
+                    child: StoryItem(
                       delegate: contentDelegates[index],
                       storkWidth: _storkWidth,
-                      imgSize: storyTileSize,
+                      imgSize: storyItemSize,
                     ),
                   ),
                 ),

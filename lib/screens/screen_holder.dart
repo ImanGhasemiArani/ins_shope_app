@@ -53,7 +53,7 @@ class MyNavBar extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: FNavBar(
-              initItemIndex: 2,
+              initItemIndex: pageController.initialPage,
               onChange: (index) {
                 pageController.animateToPage(
                   index,

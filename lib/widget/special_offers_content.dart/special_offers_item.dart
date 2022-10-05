@@ -6,19 +6,19 @@ import 'package:get/get.dart';
 
 import '../price_view/price_view.dart';
 
-class SpecOffersTile extends StatelessWidget {
-  const SpecOffersTile({
+class SpecOffersItem extends StatelessWidget {
+  const SpecOffersItem({
     super.key,
     required this.delegate,
     required this.imgSize,
   });
-  final SpecOffersTileContentDelegate delegate;
+  final SpecOffersItemContentDelegate delegate;
   final double imgSize;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      onPressed: delegate.onStoryTilePressed,
+      onPressed: delegate.onStoryItemPressed,
       minSize: 0,
       padding: EdgeInsets.zero,
       child: Card(
@@ -92,18 +92,18 @@ class SpecOffersTile extends StatelessWidget {
   }
 }
 
-typedef OnSpecOffersTilePressed = void Function();
+typedef OnSpecOffersItemPressed = void Function();
 
-class SpecOffersTileContentDelegate {
+class SpecOffersItemContentDelegate {
   final String productName;
   final String productImgUrl;
   final PriceContentDelegate priceContentDelegate;
-  final OnSpecOffersTilePressed onStoryTilePressed;
+  final OnSpecOffersItemPressed onStoryItemPressed;
 
-  SpecOffersTileContentDelegate(
+  SpecOffersItemContentDelegate(
     this.productName,
     this.productImgUrl,
     this.priceContentDelegate,
-    this.onStoryTilePressed,
+    this.onStoryItemPressed,
   );
 }
