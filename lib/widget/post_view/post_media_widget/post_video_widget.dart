@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:better_player/better_player.dart';
 import 'package:figma_squircle/figma_squircle.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -16,7 +16,7 @@ class PostVideoWidget extends PostMediaWidget {
     super.key,
     required super.size,
     required super.delegate,
-  });
+  }) : super(type: PostMediaType.video);
 
   @override
   Widget buildMediaContent() {
@@ -156,7 +156,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                             fit: BoxFit.cover,
                           );
                         } else {
-                          return const SizedBox();
+                          return const Center(
+                            child: CupertinoActivityIndicator(radius: 15),
+                          );
                         }
                       },
                     )
@@ -181,7 +183,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         ),
                       )
                     : const Center(
-                        child: CircularProgressIndicator(strokeWidth: 2));
+                        child: CupertinoActivityIndicator(radius: 15),
+                      );
               },
             ),
           ],

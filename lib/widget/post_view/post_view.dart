@@ -32,7 +32,7 @@ class PostContentDelegate {
   final String username;
   final String location;
   final String profImgUrl;
-  final PostMediaType? mediaType;
+  final PostMediaType mediaType;
   final String mediaUrl;
   final String caption;
   final int likesCount;
@@ -58,19 +58,21 @@ class PostContentDelegate {
 }
 
 enum PostMediaType {
-  photo(['jpg', 'jpeg', 'png']),
-  video(['mp4']);
+  image(['jpg', 'jpeg', 'png'], 1),
+  video(['mp4'], 1),
+  none([], 1);
 
-  const PostMediaType(this.supportedExtensions);
+  const PostMediaType(this.supportedExtensions, this.ratio);
   final List<String> supportedExtensions;
+  final double ratio;
 
-  static PostMediaType? fromExtension(String extension) {
+  static PostMediaType fromExtension(String extension) {
     extension = extension.toLowerCase().replaceAll('.', '');
     for (final type in values) {
       if (type.supportedExtensions.contains(extension)) {
         return type;
       }
     }
-    return null;
+    return none;
   }
 }

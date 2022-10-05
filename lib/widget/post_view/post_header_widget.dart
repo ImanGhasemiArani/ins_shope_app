@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../assets/assets.gen.dart';
@@ -29,6 +30,25 @@ class PostHeaderWidget extends StatelessWidget {
             width: 40,
             height: 40,
             fit: BoxFit.cover,
+            errorWidget: (context, url, error) => Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: ShapeDecoration(
+                color: Get.theme.colorScheme.background,
+                shape: SmoothRectangleBorder(
+                  borderRadius: SmoothBorderRadius(
+                    cornerRadius: 10,
+                    cornerSmoothing: 1,
+                  ),
+                ),
+              ),
+              child: FittedBox(
+                child: Icon(
+                  CupertinoIcons.person_solid,
+                  color: Colors.grey.shade400,
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(width: 10),

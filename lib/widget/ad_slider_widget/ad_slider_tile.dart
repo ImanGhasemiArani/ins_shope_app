@@ -25,6 +25,28 @@ class AdSliderTile extends StatelessWidget {
           fit: BoxFit.cover,
           height: imgSize.height,
           width: imgSize.width,
+          progressIndicatorBuilder: (context, url, progress) => FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Center(
+              child: CupertinoActivityIndicator.partiallyRevealed(
+                progress: progress.progress ?? 1,
+                radius: 15,
+              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Center(
+              child: CupertinoButton(
+                onPressed: null,
+                child: Icon(
+                  CupertinoIcons.refresh_thin,
+                  size: 50,
+                  color: Colors.grey.shade400,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

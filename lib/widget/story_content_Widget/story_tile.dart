@@ -67,6 +67,18 @@ class StoryTile extends StatelessWidget {
               fit: BoxFit.cover,
               height: imgSize,
               width: imgSize,
+              errorWidget: (context, url, error) => SizedBox(
+                height: imgSize,
+                width: imgSize,
+                child: FittedBox(
+                  child: Center(
+                    child: Icon(
+                      CupertinoIcons.person_solid,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

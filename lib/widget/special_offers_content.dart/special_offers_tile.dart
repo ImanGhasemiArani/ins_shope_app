@@ -43,6 +43,29 @@ class SpecOffersTile extends StatelessWidget {
                       fit: BoxFit.cover,
                       height: imgSize,
                       width: imgSize,
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Center(
+                          child: CupertinoActivityIndicator.partiallyRevealed(
+                            progress: progress.progress ?? 1,
+                            radius: 15,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Center(
+                          child: CupertinoButton(
+                            onPressed: null,
+                            child: Icon(
+                              CupertinoIcons.refresh_thin,
+                              size: 50,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -57,7 +80,7 @@ class SpecOffersTile extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: OfferPriceView(
-                    contentDelegate: delegate.priceContentDelegate
+                    contentDelegate: delegate.priceContentDelegate,
                   ),
                 ),
               ],
