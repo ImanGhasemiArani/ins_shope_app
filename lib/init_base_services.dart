@@ -9,6 +9,7 @@ import 'services/service_locator.dart';
 Future<void> initBaseServices() async {
   sharedPreferences = await SharedPreferences.getInstance();
   Get.put(LocalizationService('فارسی'));
+//   Get.put(LocalizationService('English'));
   Get.put(ThemeController(ThemeMode.values
       .byName(sharedPreferences.getString("themeMode") ?? "system")));
 }

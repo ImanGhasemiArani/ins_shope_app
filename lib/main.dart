@@ -17,7 +17,7 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
+    // statusBarIconBrightness: Brightness.light,
   ));
   await initBaseServices();
   runApp(const MainMaterial());
@@ -32,7 +32,6 @@ class MainMaterial extends StatelessWidget {
     LocalizationService localizationService = Get.find();
     return Builder(builder: (context) {
       final ThemeController themeController = Get.find();
-
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         locale: localizationService.locale,
@@ -54,13 +53,15 @@ class ScreenApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       body: FutureBuilder(
         future: setupServices(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // FlutterNativeSplash.remove();
-            return ScreenHolder();
+            return const ScreenHolder();
           } else {
             return const ScreenSplash();
           }
@@ -95,20 +96,20 @@ class Themes {
       ),
     ),
     appBarTheme: const AppBarTheme().copyWith(
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    //   systemOverlayStyle: SystemUiOverlayStyle.dark,
       color: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
     ),
     cardTheme: CardTheme(
       clipBehavior: Clip.antiAlias,
-      //   elevation: 8,
+      elevation: 8,
       color: const Color(0xffFFFFFF),
       surfaceTintColor: const Color(0xffFFFFFF),
       shape: SmoothRectangleBorder(
         borderRadius: SmoothBorderRadius(
           cornerRadius: 20,
-          cornerSmoothing: 0.6,
+          cornerSmoothing: 1,
         ),
       ),
     ),
@@ -138,20 +139,20 @@ class Themes {
       ),
     ),
     appBarTheme: const AppBarTheme().copyWith(
-      systemOverlayStyle: SystemUiOverlayStyle.light,
+    //   systemOverlayStyle: SystemUiOverlayStyle.light,
       color: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
     ),
     cardTheme: CardTheme(
       clipBehavior: Clip.antiAlias,
-    //   elevation: 8,
+      elevation: 8,
       color: const Color(0xff16202A),
       surfaceTintColor: const Color(0xff16202A),
       shape: SmoothRectangleBorder(
         borderRadius: SmoothBorderRadius(
           cornerRadius: 20,
-          cornerSmoothing: 0.6,
+          cornerSmoothing: 1,
         ),
       ),
     ),

@@ -1,4 +1,10 @@
 const Map<String, String> enUS = {
-    'App Name': 'App Name',
-    
+  'اپلیکیشن خرید': 'Shopping App',
+  'لایک': 'Likes',
+  'دنبال کردن': 'Follow',
+  'دنبال می کنید': 'unFollow',
+  'بیشتر': 'more',
+  'کمتر': 'less',
+  'پیشنهاد\nشگفت\nانگیز': 'Special\nOffers',
+  'ت': 'T',
 };
