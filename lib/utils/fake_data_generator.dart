@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:path/path.dart' as p;
 
 import '../widget/ad_slider_widget/ad_slider_item.dart';
+import '../widget/explore_list_view/explore_view_widget/explore_post_view.dart';
 import '../widget/post_view/post_view.dart';
 import '../widget/price_view/price_view.dart';
 import '../widget/special_offers_content.dart/special_offers_item.dart';
@@ -82,5 +83,32 @@ class FkDataGenerator {
         );
       },
     );
+  }
+
+  static List<ExplorePostContentDelegate> generateExplorePostContentDelegate() {
+    final videoLink = [
+      'https://s-v52.tamasha.com/statics/videos_file/84/c8/5Dw85_84c8af13b820e3645d8aad99a9ac229ee1193af2_n_360.mp4',
+      'https://s-v4.tamasha.com/statics/videos_file/9f/04/GKPn7_9f04a2fdcd701870780773e474f10dbf21144c30_n_360.mp4',
+      'https://s-v52.tamasha.com/statics/videos_file/f1/d3/k5j2M_f1d3ee539ded921a4113ab14073b54adea6f0a2c_n_360.mp4',
+      'https://s-v52.tamasha.com/statics/videos_file/dd/60/EBamR_dd60ca4399bbdaf927c4d0cedd1b698bd59e4d73_n_360.mp4',
+      'https://s-v52.tamasha.com/statics/videos_file/67/05/b6E4b_6705b3637f1c9e3348930162837163d51924fabc_n_240.mp4',
+    ];
+    return List.generate(
+      20,
+      (index) {
+        final String mediaLink;
+        if (Random().nextInt(3) % 3 == 0) {
+          //   mediaLink = videoLink[Random().nextInt(videoLink.length)];
+          mediaLink = 'https://picsum.photos/${index + 200}';
+        } else {
+          mediaLink = 'https://picsum.photos/${index + 200}';
+        }
+        return ExplorePostContentDelegate(
+          mediaLink,
+          PostMediaType.fromExtension(p.extension(mediaLink)),
+          () {},
+        );
+      },
+    )..shuffle();
   }
 }

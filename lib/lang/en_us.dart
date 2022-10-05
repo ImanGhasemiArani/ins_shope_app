@@ -7,4 +7,5 @@ const Map<String, String> enUS = {
   'کمتر': 'less',
   'پیشنهاد\nشگفت\nانگیز': 'Special\nOffers',
   'ت': 'T',
+  'جستجو': 'Search',
 };

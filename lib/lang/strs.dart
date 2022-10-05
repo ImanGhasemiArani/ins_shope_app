@@ -9,4 +9,5 @@ class Strs {
   static const lessStr = 'کمتر';
   static const specialOffersStr = 'پیشنهاد\nشگفت\nانگیز';
   static const currencyStr = 'ت';
+  static const searchStr = 'جستجو';
 }

@@ -75,7 +75,7 @@ class _PreferredAppBarSize extends Size {
 ///
 /// App bars are typically used in the [Scaffold.appBar] property, which places
 /// the app bar as a fixed-height widget at the top of the screen. For a scrollable
-/// app bar, see [SliverAppBar], which embeds an [MyAppBar] in a sliver for use in
+/// app bar, see [MySliverAppBar], which embeds an [MyAppBar] in a sliver for use in
 /// a [CustomScrollView].
 ///
 /// The AppBar displays the toolbar widgets, [leading], [title], and [actions],
@@ -136,7 +136,7 @@ class _PreferredAppBarSize extends Size {
 /// See also:
 ///
 ///  * [Scaffold], which displays the [MyAppBar] in its [Scaffold.appBar] slot.
-///  * [SliverAppBar], which uses [MyAppBar] to provide a flexible app bar that
+///  * [MySliverAppBar], which uses [MyAppBar] to provide a flexible app bar that
 ///    can be used in a [CustomScrollView].
 ///  * [TabBar], which is typically placed in the [bottom] slot of the [MyAppBar]
 ///    if the screen has multiple pages arranged in tabs.
@@ -359,7 +359,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   /// be the same as the app bar's overall height.
   ///
   /// A flexible space isn't actually flexible unless the [MyAppBar]'s container
-  /// changes the [MyAppBar]'s size. A [SliverAppBar] in a [CustomScrollView]
+  /// changes the [MyAppBar]'s size. A [MySliverAppBar] in a [CustomScrollView]
   /// changes the [MyAppBar]'s height when scrolled.
   ///
   /// Typically a [FlexibleSpaceBar]. See [FlexibleSpaceBar] for details.
@@ -644,7 +644,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   /// A value of 1.0 is fully opaque, and a value of 0.0 is fully transparent.
   ///
   /// Typically, this value is not changed from its default value (1.0). It is
-  /// used by [SliverAppBar] to animate the opacity of the toolbar when the app
+  /// used by [MySliverAppBar] to animate the opacity of the toolbar when the app
   /// bar is scrolled.
   /// {@endtemplate}
   final double toolbarOpacity;
@@ -655,7 +655,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   /// A value of 1.0 is fully opaque, and a value of 0.0 is fully transparent.
   ///
   /// Typically, this value is not changed from its default value (1.0). It is
-  /// used by [SliverAppBar] to animate the opacity of the toolbar when the app
+  /// used by [MySliverAppBar] to animate the opacity of the toolbar when the app
   /// bar is scrolled.
   /// {@endtemplate}
   final double bottomOpacity;
@@ -1417,7 +1417,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 /// {@end-tool}
 ///
 /// {@tool dartpad}
-/// This sample shows a [SliverAppBar] and it's behavior when using the
+/// This sample shows a [MySliverAppBar] and it's behavior when using the
 /// [pinned], [snap] and [floating] parameters.
 ///
 /// ** See code in examples/api/lib/material/app_bar/sliver_app_bar.1.dart **
@@ -1450,7 +1450,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 ///
 /// See also:
 ///
-///  * [CustomScrollView], which integrates the [SliverAppBar] into its
+///  * [CustomScrollView], which integrates the [MySliverAppBar] into its
 ///    scrolling.
 ///  * [MyAppBar], which is a fixed-height app bar for use in [Scaffold.appBar].
 ///  * [TabBar], which is typically placed in the [bottom] slot of the [MyAppBar]
@@ -1460,12 +1460,12 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 ///  * [FlexibleSpaceBar], which is used with [flexibleSpace] when the app bar
 ///    can expand and collapse.
 ///  * <https://material.io/design/components/app-bars-top.html>
-class SliverAppBar extends StatefulWidget {
+class MySliverAppBar extends StatefulWidget {
   /// Creates a material design app bar that can be placed in a [CustomScrollView].
   ///
   /// The arguments [forceElevated], [primary], [floating], [pinned], [snap]
   /// and [automaticallyImplyLeading] must not be null.
-  const SliverAppBar({
+  const MySliverAppBar({
     Key? key,
     this.leading,
     this.automaticallyImplyLeading = true,
@@ -1693,7 +1693,7 @@ class SliverAppBar extends StatefulWidget {
   ///
   /// See also:
   ///
-  ///  * [SliverAppBar] for more animated examples of how this property changes the
+  ///  * [MySliverAppBar] for more animated examples of how this property changes the
   ///    behavior of the app bar in combination with [pinned] and [snap].
   final bool floating;
 
@@ -1714,7 +1714,7 @@ class SliverAppBar extends StatefulWidget {
   ///
   /// See also:
   ///
-  ///  * [SliverAppBar] for more animated examples of how this property changes the
+  ///  * [MySliverAppBar] for more animated examples of how this property changes the
   ///    behavior of the app bar in combination with [floating].
   final bool pinned;
 
@@ -1751,7 +1751,7 @@ class SliverAppBar extends StatefulWidget {
   ///
   /// See also:
   ///
-  ///  * [SliverAppBar] for more animated examples of how this property changes the
+  ///  * [MySliverAppBar] for more animated examples of how this property changes the
   ///    behavior of the app bar in combination with [pinned] and [floating].
   final bool snap;
 
@@ -1805,12 +1805,12 @@ class SliverAppBar extends StatefulWidget {
   final SystemUiOverlayStyle? systemOverlayStyle;
 
   @override
-  State<SliverAppBar> createState() => _SliverAppBarState();
+  State<MySliverAppBar> createState() => _MySliverAppBarState();
 }
 
 // This class is only Stateful because it owns the TickerProvider used
 // by the floating appbar snap animation (via FloatingHeaderSnapConfiguration).
-class _SliverAppBarState extends State<SliverAppBar>
+class _MySliverAppBarState extends State<MySliverAppBar>
     with TickerProviderStateMixin {
   FloatingHeaderSnapConfiguration? _snapConfiguration;
   OverScrollHeaderStretchConfiguration? _stretchConfiguration;
@@ -1851,7 +1851,7 @@ class _SliverAppBarState extends State<SliverAppBar>
   }
 
   @override
-  void didUpdateWidget(SliverAppBar oldWidget) {
+  void didUpdateWidget(MySliverAppBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.snap != oldWidget.snap || widget.floating != oldWidget.floating)
       _updateSnapConfiguration();
