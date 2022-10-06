@@ -102,10 +102,12 @@ class FkDataGenerator {
       18 * 1,
       (index) {
         final String mediaLink;
+        var enableAutoPlay = false;
         if (index == currentIndex) {
           mediaLink = videoLink[Random().nextInt(videoLink.length)];
           vIndex++;
           currentIndex += 9 + pow(-1, vIndex).toInt();
+          enableAutoPlay = true;
         } else {
           if (Random().nextInt(4) % 4 == 0) {
             mediaLink = videoLink[Random().nextInt(videoLink.length)];
@@ -117,6 +119,7 @@ class FkDataGenerator {
         return ExplorePostContentDelegate(
           mediaLink,
           PostMediaType.fromExtension(p.extension(mediaLink)),
+          enableAutoPlay,
           () {},
         );
       },

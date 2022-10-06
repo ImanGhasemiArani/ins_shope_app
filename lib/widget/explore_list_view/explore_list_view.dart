@@ -1,24 +1,41 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../services/player_controller_services.dart';
 import 'explore_view_widget/explore_post_view.dart';
 
 var lazyExplorePost = [].obs;
 
-class ExploreListView extends StatelessWidget {
+typedef OnExplorePostPressed = void Function(
+    ExplorePostContentDelegate contentDelegates);
+
+class ExploreListView extends StatefulWidget {
   const ExploreListView({
     super.key,
     required this.contentDelegates,
+    this.onExplorePostPressed,
   });
 
   final List<ExplorePostContentDelegate> contentDelegates;
+  final OnExplorePostPressed? onExplorePostPressed;
+
+  @override
+  State<ExploreListView> createState() => _ExploreListViewState();
+}
+
+class _ExploreListViewState extends State<ExploreListView> {
+  @override
+  void dispose() {
+    PlayerControllerServices().dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    lazyExplorePost = contentDelegates.obs;
+    lazyExplorePost = widget.contentDelegates.obs;
     return AnimationLimiter(
       child: Obx(
         () => SliverGrid(
@@ -59,8 +76,16 @@ class ExploreListView extends StatelessWidget {
                 child: ScaleAnimation(
                   child: FadeInAnimation(
                     child: index != lazyExplorePost.length
-                        ? ExplorePostViewDelegate(
-                            delegate: lazyExplorePost[index],
+                        ? CupertinoButton(
+                            onPressed: () {
+                              widget.onExplorePostPressed
+                                  ?.call(lazyExplorePost[index]);
+                            },
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            child: ExplorePostViewDelegate(
+                              delegate: lazyExplorePost[index],
+                            ),
                           )
                         : Center(
                             child: LoadingAnimationWidget.waveDots(

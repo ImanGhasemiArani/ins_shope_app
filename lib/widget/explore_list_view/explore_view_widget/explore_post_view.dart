@@ -85,11 +85,13 @@ typedef OnExplorePostPressed = void Function();
 class ExplorePostContentDelegate {
   final String mediaUrl;
   final PostMediaType mediaType;
+  final bool enableAutoPlay;
   final OnExplorePostPressed onExplorePostPressed;
 
   ExplorePostContentDelegate(
     this.mediaUrl,
     this.mediaType,
+    this.enableAutoPlay,
     this.onExplorePostPressed,
   );
 }

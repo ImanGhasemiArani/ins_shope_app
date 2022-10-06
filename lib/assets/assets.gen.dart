@@ -53,6 +53,10 @@ class $AssetsIconsGen {
   SvgGenImage get discountShapeTwoTone =>
       const SvgGenImage('assets/icons/discount-shape-twoTone.svg');
 
+  /// File path: assets/icons/gallery-bulk.svg
+  SvgGenImage get galleryBulk =>
+      const SvgGenImage('assets/icons/gallery-bulk.svg');
+
   /// File path: assets/icons/heart-bulk.svg
   SvgGenImage get heartBulk => const SvgGenImage('assets/icons/heart-bulk.svg');
 
@@ -75,6 +79,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/more-2-twoTone.svg
   SvgGenImage get more2TwoTone =>
       const SvgGenImage('assets/icons/more-2-twoTone.svg');
+
+  /// File path: assets/icons/play-bulk.svg
+  SvgGenImage get playBulk => const SvgGenImage('assets/icons/play-bulk.svg');
 
   /// File path: assets/icons/profile-bulk.svg
   SvgGenImage get profileBulk =>

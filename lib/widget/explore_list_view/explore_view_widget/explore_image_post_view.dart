@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../assets/assets.gen.dart';
 import 'explore_post_view.dart';
 
 class ExploreImagePostView extends ExplorePostView {
@@ -44,6 +45,12 @@ class ExploreImagePostView extends ExplorePostView {
 
   @override
   Widget buildOverlayContent() {
-    return const SizedBox();
+    return Align(
+      alignment: Alignment.topRight,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Assets.icons.galleryBulk.svg(color: Colors.white),
+      ),
+    );
   }
 }
