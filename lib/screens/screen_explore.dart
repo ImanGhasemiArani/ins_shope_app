@@ -27,6 +27,7 @@ class ScreenExplore extends StatelessWidget {
       child: CustomScrollView(
         clipBehavior: Clip.none,
         physics: const BouncingScrollPhysics(),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           _buildAppBar(),
           const SliverToBoxAdapter(child: SizedBox(height: 25)),

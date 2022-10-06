@@ -22,34 +22,31 @@ class FNavBar extends StatelessWidget {
       items.length,
       (index) => (index == initItemIndex).obs,
     );
-    var selectedItemIndex = initItemIndex.obs;
 
     return Card(
       color: Get.theme.colorScheme.background,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+      margin: EdgeInsets.zero,
+      child: SizedBox(
+        height: 64,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(
             items.length,
             (i) => Obx(
               () => CupertinoButton(
-                onPressed: selectedItemIndex.value == i
+                onPressed: itemController[i].value
                     ? null
                     : () {
-                        selectedItemIndex.value = i;
                         onChange?.call(i);
                         itemController
                             .forEach((element) => element.value = false);
                         itemController[i].value = true;
                       },
-                child: Obx(
-                  () => FNavBarItem(
-                    icon: items[i].icon,
-                    selectedIcon: items[i].selectedIcon,
-                    title: items[i].title,
-                    isSelected: itemController[i].value,
-                  ),
+                child: FNavBarItem(
+                  icon: items[i].icon,
+                  selectedIcon: items[i].selectedIcon,
+                  title: items[i].title,
+                  isSelected: itemController[i].value,
                 ),
               ),
             ),
@@ -81,7 +78,7 @@ class FNavBarItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         isSelected ? selectedIcon ?? icon : icon,
-        const SizedBox(height: 5),
+        if (title != null) const SizedBox(height: 5),
         if (title != null) Text(title!),
       ],
     );

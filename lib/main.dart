@@ -56,6 +56,7 @@ class ScreenApp extends StatelessWidget {
     Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: FutureBuilder(
         future: setupServices(),
         builder: (context, snapshot) {
@@ -96,7 +97,7 @@ class Themes {
       ),
     ),
     appBarTheme: const AppBarTheme().copyWith(
-    //   systemOverlayStyle: SystemUiOverlayStyle.dark,
+      //   systemOverlayStyle: SystemUiOverlayStyle.dark,
       color: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -139,7 +140,7 @@ class Themes {
       ),
     ),
     appBarTheme: const AppBarTheme().copyWith(
-    //   systemOverlayStyle: SystemUiOverlayStyle.light,
+      //   systemOverlayStyle: SystemUiOverlayStyle.light,
       color: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,

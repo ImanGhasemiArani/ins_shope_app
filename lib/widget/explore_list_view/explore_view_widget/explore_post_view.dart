@@ -20,7 +20,6 @@ class ExplorePostViewDelegate extends StatelessWidget {
       case PostMediaType.image:
         return ExploreImagePostView(delegate: delegate);
       case PostMediaType.video:
-        // return ExploreVideoPostView(delegate: delegate);
         return ExploreVideoPostView(delegate: delegate);
       case PostMediaType.none:
         //this because for invalid api image link it will return null for main link should remove

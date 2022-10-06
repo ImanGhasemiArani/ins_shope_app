@@ -43,7 +43,6 @@ class PlayerControllerServices {
   }
 
   void dispose() {
-    // ignore: avoid_function_literals_in_foreach_calls
     _controllerRegistry.forEach((controller) => controller.dispose());
     _currentPlayingController = null;
   }

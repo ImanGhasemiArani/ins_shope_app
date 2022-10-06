@@ -18,6 +18,7 @@ class ScreenHolder extends HookWidget {
   Widget build(BuildContext context) {
     final pageController = usePageController(initialPage: 2);
     return Scaffold(
+      extendBody: true,
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
@@ -29,8 +30,10 @@ class ScreenHolder extends HookWidget {
           ScreenCart(),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: MyNavBar(pageController: pageController),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 16, right: 40, left: 40),
+        child: MyNavBar(pageController: pageController),
+      ),
     );
   }
 }
@@ -50,50 +53,43 @@ class MyNavBar extends StatelessWidget {
       duration: const Duration(milliseconds: 500),
       child: SlideAnimation(
         child: FadeInAnimation(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: FNavBar(
-              initItemIndex: pageController.initialPage,
-              onChange: (index) {
-                pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeIn,
-                );
-              },
-              items: [
-                FNavBarItem(
-                  icon: Assets.icons.profileTwoTone
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                  selectedIcon: Assets.icons.profileBulk
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                ),
-                FNavBarItem(
-                  icon: Assets.icons.searchNormal1TwoTone
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                  selectedIcon: Assets.icons.searchNormal1Bulk
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                ),
-                FNavBarItem(
-                  icon: Assets.icons.home1TwoTone
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                  selectedIcon: Assets.icons.home1Bulk
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                ),
-                FNavBarItem(
-                  icon: Assets.icons.category2TwoTone
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                  selectedIcon: Assets.icons.category2Bulk
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                ),
-                FNavBarItem(
-                  icon: Assets.icons.bag2TwoTone
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                  selectedIcon: Assets.icons.bag2Bulk
-                      .svg(color: Get.theme.colorScheme.onBackground),
-                ),
-              ],
-            ),
+          child: FNavBar(
+            initItemIndex: pageController.initialPage,
+            onChange: (index) {
+              pageController.jumpToPage(index);
+            },
+            items: [
+              FNavBarItem(
+                icon: Assets.icons.profileTwoTone
+                    .svg(color: Get.theme.colorScheme.onBackground),
+                selectedIcon: Assets.icons.profileBulk
+                    .svg(color: Get.theme.colorScheme.onBackground),
+              ),
+              FNavBarItem(
+                icon: Assets.icons.searchNormal1TwoTone
+                    .svg(color: Get.theme.colorScheme.onBackground),
+                selectedIcon: Assets.icons.searchNormal1Bulk
+                    .svg(color: Get.theme.colorScheme.onBackground),
+              ),
+              FNavBarItem(
+                icon: Assets.icons.home1TwoTone
+                    .svg(color: Get.theme.colorScheme.onBackground),
+                selectedIcon: Assets.icons.home1Bulk
+                    .svg(color: Get.theme.colorScheme.onBackground),
+              ),
+              FNavBarItem(
+                icon: Assets.icons.category2TwoTone
+                    .svg(color: Get.theme.colorScheme.onBackground),
+                selectedIcon: Assets.icons.category2Bulk
+                    .svg(color: Get.theme.colorScheme.onBackground),
+              ),
+              FNavBarItem(
+                icon: Assets.icons.bag2TwoTone
+                    .svg(color: Get.theme.colorScheme.onBackground),
+                selectedIcon: Assets.icons.bag2Bulk
+                    .svg(color: Get.theme.colorScheme.onBackground),
+              ),
+            ],
           ),
         ),
       ),
