@@ -108,8 +108,8 @@ class BodyContent extends StatelessWidget {
         ],
       ),
       onNotification: (notification) {
-        if (notification.metrics.pixels ==
-            notification.metrics.maxScrollExtent) {
+        if (notification.metrics.pixels >=
+            notification.metrics.maxScrollExtent - 500) {
           _loadMorePost();
         }
         return false;

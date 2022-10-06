@@ -103,18 +103,18 @@ class FkDataGenerator {
       (index) {
         final String mediaLink;
         var enableAutoPlay = false;
-        if (index == currentIndex) {
+        // if (index == currentIndex) {
+        //   mediaLink = videoLink[Random().nextInt(videoLink.length)];
+        //   vIndex++;
+        //   currentIndex += 9 + pow(-1, vIndex).toInt();
+        //   enableAutoPlay = true;
+        // } else {
+        if (Random().nextInt(4) % 4 == 0) {
           mediaLink = videoLink[Random().nextInt(videoLink.length)];
-          vIndex++;
-          currentIndex += 9 + pow(-1, vIndex).toInt();
-          enableAutoPlay = true;
         } else {
-          if (Random().nextInt(4) % 4 == 0) {
-            mediaLink = videoLink[Random().nextInt(videoLink.length)];
-          } else {
-            mediaLink = 'https://picsum.photos/${index + 500}';
-          }
+          mediaLink = 'https://picsum.photos/${index + 500}';
         }
+        // }
 
         return ExplorePostContentDelegate(
           mediaLink,

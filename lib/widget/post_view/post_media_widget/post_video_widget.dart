@@ -116,6 +116,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   void _playVideo() {
     PlayerControllerServices().currentPlayingController = _controller;
+    _controller?.setVolume(1);
     _controller?.play();
   }
 

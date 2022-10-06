@@ -45,12 +45,13 @@ class ExploreImagePostView extends ExplorePostView {
 
   @override
   Widget buildOverlayContent() {
-    return Align(
-      alignment: Alignment.topRight,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Assets.icons.galleryBulk.svg(color: Colors.white),
-      ),
-    );
+    return const SizedBox();
+    // return Align(
+    //   alignment: Alignment.topRight,
+    //   child: Padding(
+    //     padding: const EdgeInsets.all(8),
+    //     child: Assets.icons.galleryBulk.svg(color: Colors.white),
+    //   ),
+    // );
   }
 }
