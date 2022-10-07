@@ -105,6 +105,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/send-2-twoTone.svg
   SvgGenImage get send2TwoTone =>
       const SvgGenImage('assets/icons/send-2-twoTone.svg');
+
+  /// File path: assets/icons/slider-horizontal-1-bulk.svg
+  SvgGenImage get sliderHorizontal1Bulk =>
+      const SvgGenImage('assets/icons/slider-horizontal-1-bulk.svg');
 }
 
 class Assets {

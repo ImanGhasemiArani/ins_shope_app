@@ -2,25 +2,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../post_view.dart';
-import 'post_media_widget.dart';
+import '../../../assets/assets.gen.dart';
+import 'explore_post_view.dart';
 
-class PostImageWidget extends PostMediaWidget {
-  const PostImageWidget({
+class ExploreGroupPostView extends ExplorePostView {
+  const ExploreGroupPostView({
     super.key,
-    required super.size,
     required super.delegate,
-    this.productLinkerContent,
-  }) : super(type: PostMediaType.image);
-
-  final Widget? productLinkerContent;
+  });
 
   @override
   Widget buildMediaContent() {
     return CachedNetworkImage(
       imageUrl: delegate.mediaUrls.first,
-      height: size.height,
-      width: size.width,
+      width: double.infinity,
+      height: double.infinity,
       fit: BoxFit.cover,
       progressIndicatorBuilder: (context, url, progress) => FittedBox(
         fit: BoxFit.scaleDown,
@@ -48,10 +44,13 @@ class PostImageWidget extends PostMediaWidget {
   }
 
   @override
-  Widget buildProductLinkerContent() {
-    if (productLinkerContent != null) {
-      return productLinkerContent!;
-    }
-    return super.buildProductLinkerContent();
+  Widget buildOverlayContent() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Assets.icons.sliderHorizontal1Bulk.svg(color: Colors.white),
+      ),
+    );
   }
 }

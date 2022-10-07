@@ -16,7 +16,10 @@ class PostVideoWidget extends PostMediaWidget {
     super.key,
     required super.size,
     required super.delegate,
+    this.productLinkerContent,
   }) : super(type: PostMediaType.video);
+
+  final Widget? productLinkerContent;
 
   @override
   Widget buildMediaContent() {
@@ -27,6 +30,14 @@ class PostVideoWidget extends PostMediaWidget {
       ),
       child: VideoPlayerWidget(delegate: delegate),
     );
+  }
+
+  @override
+  Widget buildProductLinkerContent() {
+    if (productLinkerContent != null) {
+      return productLinkerContent!;
+    }
+    return super.buildProductLinkerContent();
   }
 }
 
@@ -64,10 +75,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.initState();
     dataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      widget.delegate.mediaUrl,
+      widget.delegate.mediaUrls.first,
       cacheConfiguration: BetterPlayerCacheConfiguration(
         useCache: true,
-        key: widget.delegate.mediaUrl,
+        key: widget.delegate.mediaUrls.first,
         preCacheSize: 3 * 1024 * 1024,
         maxCacheSize: 512 * 1024 * 1024,
         maxCacheFileSize: 50 * 1024 * 1024,
@@ -141,7 +152,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         child: Stack(
           children: [
             CachedVideoPreviewWidget(
-              path: widget.delegate.mediaUrl,
+              path: widget.delegate.mediaUrls.first,
               type: SourceType.remote,
               fileImageBuilder: (context, snapshot) {
                 return AspectRatio(

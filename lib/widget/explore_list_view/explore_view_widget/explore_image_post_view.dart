@@ -14,7 +14,7 @@ class ExploreImagePostView extends ExplorePostView {
   @override
   Widget buildMediaContent() {
     return CachedNetworkImage(
-      imageUrl: delegate.mediaUrl,
+      imageUrl: delegate.mediaUrls.first,
       width: double.infinity,
       height: double.infinity,
       fit: BoxFit.cover,

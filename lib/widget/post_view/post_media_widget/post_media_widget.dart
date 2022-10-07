@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../assets/assets.gen.dart';
 import '../../../services/localization_service.dart';
 import '../post_view.dart';
+import 'post_group_widget.dart';
 import 'post_image_widget.dart';
 import 'post_video_widget.dart';
 
@@ -26,10 +27,10 @@ class PostMediaWidgetDelegate extends StatelessWidget {
         return PostImageWidget(delegate: delegate, size: size);
       case PostMediaType.video:
         return PostVideoWidget(delegate: delegate, size: size);
+      case PostMediaType.group:
+        return PostGroupWidget(delegate: delegate, size: size);
       case PostMediaType.none:
-      //this because for invalid api image link it will return null for main link should remove
-        return PostImageWidget(delegate: delegate, size: size);
-      // return PostEmptyWidget(size: size, delegate: delegate);
+        return PostEmptyWidget(size: size, delegate: delegate);
     }
   }
 }
@@ -50,17 +51,11 @@ abstract class PostMediaWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: type.ratio,
-      child: ClipSmoothRect(
-        radius: SmoothBorderRadius(
-          cornerRadius: 20,
-          cornerSmoothing: 1,
-        ),
-        child: Stack(
-          children: [
-            buildMediaContent(),
-            buildProductLinkerContent(),
-          ],
-        ),
+      child: Stack(
+        children: [
+          buildMediaContent(),
+          buildProductLinkerContent(),
+        ],
       ),
     );
   }

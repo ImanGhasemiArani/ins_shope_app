@@ -62,13 +62,23 @@ class FkDataGenerator {
 
   static List<PostContentDelegate> generatePostContentsDelegate() {
     return List.generate(
-      7 + 3,
+      10,
       (index) {
-        final String mediaLink;
-        if (Random().nextInt(3) % 3 == 0) {
-          mediaLink = videoLink[Random().nextInt(videoLink.length)];
+        final List<String> mediaLink;
+        final r = Random().nextInt(3) % 3;
+        final PostMediaType type;
+        if (r == 0) {
+          mediaLink = [videoLink[Random().nextInt(videoLink.length)]];
+          type = PostMediaType.video;
+        } else if (r == 1) {
+          mediaLink = ['https://picsum.photos/${index + 500}'];
+          type = PostMediaType.image;
         } else {
-          mediaLink = 'https://picsum.photos/${index + 500}';
+          mediaLink = List.generate(
+            Random().nextInt(9) + 2,
+            (index) => 'https://picsum.photos/${index + 600}',
+          );
+          type = PostMediaType.group;
         }
         return PostContentDelegate(
           'Iman.Casper',
@@ -78,7 +88,7 @@ class FkDataGenerator {
           "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
           Random().nextInt(10000),
           "کفش ورزشی",
-          PostMediaType.fromExtension(p.extension(mediaLink)),
+          type,
           isFollowing: Random().nextBool(),
           isLiked: Random().nextBool(),
           isBookmarked: Random().nextBool(),
@@ -97,24 +107,35 @@ class FkDataGenerator {
     return List.generate(
       18 * 1,
       (index) {
-        final String mediaLink;
         var enableAutoPlay = false;
+        final List<String> mediaLink;
+        final PostMediaType type;
         if (index == currentIndex) {
-          mediaLink = videoLink[Random().nextInt(videoLink.length)];
+          mediaLink = [videoLink[Random().nextInt(videoLink.length)]];
+          type = PostMediaType.video;
           o *= -1;
           currentIndex += 9 + o;
           enableAutoPlay = true;
         } else {
-          if (Random().nextInt(5) % 5 == 0) {
-            mediaLink = videoLink[Random().nextInt(videoLink.length)];
+          final r = Random().nextInt(5) % 5;
+          if (r == 0) {
+            mediaLink = [videoLink[Random().nextInt(videoLink.length)]];
+            type = PostMediaType.video;
+          } else if (r == 1 || r == 2) {
+            mediaLink = ['https://picsum.photos/${index + 500}'];
+            type = PostMediaType.image;
           } else {
-            mediaLink = 'https://picsum.photos/${index + 500}';
+            mediaLink = List.generate(
+              Random().nextInt(9) + 2,
+              (index) => 'https://picsum.photos/${index + 600}',
+            );
+            type = PostMediaType.group;
           }
         }
 
         return ExplorePostContentDelegate(
           mediaLink,
-          PostMediaType.fromExtension(p.extension(mediaLink)),
+          type,
           enableAutoPlay,
           () {},
         );

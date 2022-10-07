@@ -49,7 +49,7 @@ class VideoThumbnailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedVideoPreviewWidget(
-      path: delegate.mediaUrl,
+      path: delegate.mediaUrls.first,
       type: SourceType.remote,
       fileImageBuilder: (context, snapshot) {
         return AspectRatio(

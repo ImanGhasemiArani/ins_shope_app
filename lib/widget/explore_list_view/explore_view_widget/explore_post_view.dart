@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../post_view/post_view.dart';
+import 'explore_group_post_view.dart';
 import 'explore_image_post_view.dart';
 import 'explore_video_post_view.dart';
 
@@ -21,10 +22,10 @@ class ExplorePostViewDelegate extends StatelessWidget {
         return ExploreImagePostView(delegate: delegate);
       case PostMediaType.video:
         return ExploreVideoPostView(delegate: delegate);
+      case PostMediaType.group:
+        return ExploreGroupPostView(delegate: delegate);
       case PostMediaType.none:
-        //this because for invalid api image link it will return null for main link should remove
-        return ExploreImagePostView(delegate: delegate);
-      // return ExploreEmptyPostView(delegate: delegate);
+        return ExploreEmptyPostView(delegate: delegate);
     }
   }
 }
@@ -83,13 +84,13 @@ class ExploreEmptyPostView extends ExplorePostView {
 typedef OnExplorePostPressed = void Function();
 
 class ExplorePostContentDelegate {
-  final String mediaUrl;
+  final List<String> mediaUrls;
   final PostMediaType mediaType;
   final bool enableAutoPlay;
   final OnExplorePostPressed onExplorePostPressed;
 
   ExplorePostContentDelegate(
-    this.mediaUrl,
+    this.mediaUrls,
     this.mediaType,
     this.enableAutoPlay,
     this.onExplorePostPressed,

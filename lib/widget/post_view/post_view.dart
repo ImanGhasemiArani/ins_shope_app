@@ -1,3 +1,4 @@
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
 import 'post_footer_widget.dart';
@@ -19,7 +20,13 @@ class PostView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             PostHeaderWidget(delegate: delegate),
-            PostMediaWidgetDelegate(delegate: delegate),
+            ClipSmoothRect(
+              radius: SmoothBorderRadius(
+                cornerRadius: 20,
+                cornerSmoothing: 1,
+              ),
+              child: PostMediaWidgetDelegate(delegate: delegate),
+            ),
             PostFooterWidget(delegate: delegate),
           ],
         ),
@@ -33,7 +40,7 @@ class PostContentDelegate {
   final String location;
   final String profImgUrl;
   final PostMediaType mediaType;
-  final String mediaUrl;
+  final List<String> mediaUrls;
   final String caption;
   final int likesCount;
   bool isFollowing;
@@ -46,7 +53,7 @@ class PostContentDelegate {
     this.username,
     this.location,
     this.profImgUrl,
-    this.mediaUrl,
+    this.mediaUrls,
     this.caption,
     this.likesCount,
     this.productName,
@@ -55,11 +62,41 @@ class PostContentDelegate {
     this.isLiked = false,
     this.isBookmarked = false,
   });
+
+  // create copyWith method
+  PostContentDelegate copyWith({
+    String? username,
+    String? location,
+    String? profImgUrl,
+    PostMediaType? mediaType,
+    List<String>? mediaUrls,
+    String? caption,
+    int? likesCount,
+    bool? isFollowing,
+    bool? isLiked,
+    bool? isBookmarked,
+    String? productName,
+  }) {
+    return PostContentDelegate(
+      username ?? this.username,
+      location ?? this.location,
+      profImgUrl ?? this.profImgUrl,
+      mediaUrls ?? this.mediaUrls,
+      caption ?? this.caption,
+      likesCount ?? this.likesCount,
+      productName ?? this.productName,
+      mediaType ?? this.mediaType,
+      isFollowing: isFollowing ?? this.isFollowing,
+      isLiked: isLiked ?? this.isLiked,
+      isBookmarked: isBookmarked ?? this.isBookmarked,
+    );
+  }
 }
 
 enum PostMediaType {
   image(['jpg', 'jpeg', 'png'], 1),
   video(['mp4'], 1),
+  group(['jpg', 'jpeg', 'png', 'mp4'], 1),
   none([], 1);
 
   const PostMediaType(this.supportedExtensions, this.ratio);
