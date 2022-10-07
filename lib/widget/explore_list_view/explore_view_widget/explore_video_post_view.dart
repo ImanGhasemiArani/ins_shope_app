@@ -1,10 +1,7 @@
-import 'dart:async';
-import 'dart:typed_data';
-
+import 'package:cached_video_preview/cached_video_preview.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../assets/assets.gen.dart';
 import 'explore_post_view.dart';
@@ -51,23 +48,21 @@ class VideoThumbnailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.sync(() async => await VideoThumbnail.thumbnailData(
-            video: delegate.mediaUrl,
-          )),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData) {
-          return Image.memory(
-            snapshot.data as Uint8List,
+    return CachedVideoPreviewWidget(
+      path: delegate.mediaUrl,
+      type: SourceType.remote,
+      fileImageBuilder: (context, snapshot) {
+        return AspectRatio(
+          aspectRatio: 1 / 1,
+          child: Image.memory(
+            snapshot,
             fit: BoxFit.cover,
-          );
-        } else {
-          return const Center(
-            child: CupertinoActivityIndicator(radius: 15),
-          );
-        }
+          ),
+        );
       },
+      placeHolder: const Center(
+        child: CupertinoActivityIndicator(radius: 15),
+      ),
     );
   }
 }

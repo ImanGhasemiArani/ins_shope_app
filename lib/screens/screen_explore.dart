@@ -50,7 +50,7 @@ class ScreenExplore extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           shape: SmoothRectangleBorder(
             borderRadius: SmoothBorderRadius(
-              cornerRadius: 15,
+              cornerRadius: 10,
               cornerSmoothing: 1,
             ),
           ),

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:better_player/better_player.dart';
+import 'package:cached_video_preview/cached_video_preview.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../services/player_controller_services.dart';
@@ -140,33 +140,21 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         width: double.infinity,
         child: Stack(
           children: [
-            AspectRatio(
-              aspectRatio: 1 / 1,
-              child: thumbnail == null
-                  ? FutureBuilder(
-                      future: Future.sync(
-                          () async => await VideoThumbnail.thumbnailData(
-                                video: widget.delegate.mediaUrl,
-                              )),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData) {
-                          thumbnail = snapshot.data as Uint8List;
-                          return Image.memory(
-                            thumbnail!,
-                            fit: BoxFit.cover,
-                          );
-                        } else {
-                          return const Center(
-                            child: CupertinoActivityIndicator(radius: 15),
-                          );
-                        }
-                      },
-                    )
-                  : Image.memory(
-                      thumbnail!,
-                      fit: BoxFit.cover,
-                    ),
+            CachedVideoPreviewWidget(
+              path: widget.delegate.mediaUrl,
+              type: SourceType.remote,
+              fileImageBuilder: (context, snapshot) {
+                return AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Image.memory(
+                    snapshot,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+              placeHolder: const Center(
+                child: CupertinoActivityIndicator(radius: 15),
+              ),
             ),
             StreamBuilder<BetterPlayerController?>(
               stream: playerControllerStreamController.stream,
