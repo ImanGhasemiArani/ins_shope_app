@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:better_player/better_player.dart';
 import 'package:cached_video_preview/cached_video_preview.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -17,19 +16,16 @@ class PostVideoWidget extends PostMediaWidget {
     required super.size,
     required super.delegate,
     this.productLinkerContent,
+    this.visibleFraction = 0.6,
   }) : super(type: PostMediaType.video);
 
   final Widget? productLinkerContent;
+  final double visibleFraction;
 
   @override
   Widget buildMediaContent() {
-    return ClipSmoothRect(
-      radius: SmoothBorderRadius(
-        cornerRadius: 20,
-        cornerSmoothing: 1,
-      ),
-      child: VideoPlayerWidget(delegate: delegate),
-    );
+    return VideoPlayerWidget(
+        delegate: delegate, visibleFraction: visibleFraction);
   }
 
   @override
@@ -45,9 +41,11 @@ class VideoPlayerWidget extends StatefulWidget {
   const VideoPlayerWidget({
     Key? key,
     required this.delegate,
+    this.visibleFraction = 0.6,
   }) : super(key: key);
 
   final PostContentDelegate delegate;
+  final double visibleFraction;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -140,7 +138,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     return VisibilityDetector(
       key: Key(hashCode.toString() + DateTime.now().toString()),
       onVisibilityChanged: (info) {
-        if (info.visibleFraction >= 0.6) {
+        if (info.visibleFraction >= widget.visibleFraction) {
           _setupController();
         } else {
           _freeController();

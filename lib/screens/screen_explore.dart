@@ -19,7 +19,7 @@ class ScreenExplore extends StatelessWidget {
     return NotificationListener<ScrollEndNotification>(
       onNotification: (scrollNotification) {
         if (scrollNotification.metrics.pixels >=
-            scrollNotification.metrics.maxScrollExtent - 500) {
+            scrollNotification.metrics.maxScrollExtent - 1000) {
           _loadMorePost();
         }
         return false;

@@ -1,6 +1,9 @@
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../utils/extension.dart';
+import '../../../services/localization_service.dart';
+import '../../scroll_behavior/scroll_behavior.dart';
 import '../post_view.dart';
 import 'post_image_widget.dart';
 import 'post_media_widget.dart';
@@ -15,41 +18,86 @@ class PostGroupWidget extends PostMediaWidget {
 
   @override
   Widget buildMediaContent() {
-    return ClipSmoothRect(
-      child: PageView.builder(
-        scrollBehavior: MyScrollBehavior(),
-        itemCount: delegate.mediaUrls.length,
-        itemBuilder: (context, index) => _buildDynamicPostWidget(index),
-      ),
+    return PageViewContent(size: size, delegate: delegate);
+  }
+}
+
+class PageViewContent extends StatefulWidget {
+  const PageViewContent({
+    super.key,
+    required this.size,
+    required this.delegate,
+  });
+  final Size size;
+  final PostContentDelegate delegate;
+
+  @override
+  State<PageViewContent> createState() => _PageViewContentState();
+}
+
+class _PageViewContentState extends State<PageViewContent> {
+  final currentPage = 0.obs;
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        PageView.builder(
+          scrollBehavior: NoIndicatorScrollBehavior(),
+          itemCount: widget.delegate.mediaUrls.length,
+          itemBuilder: (context, index) => _buildDynamicPostWidget(index),
+          onPageChanged: (value) {
+            currentPage.value = value;
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Align(
+            alignment: LocalizationService.textDirection == TextDirection.ltr
+                ? Alignment.topLeft
+                : Alignment.topRight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              width: 45,
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Obx(
+                () {
+                  return Text(
+                    '${currentPage.value + 1}/${widget.delegate.mediaUrls.length}'
+                        .trNums(),
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.caption?.copyWith(color: Colors.white),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildDynamicPostWidget(index) {
-    if (PostMediaType.fromExtension(delegate.mediaUrls[index]) ==
+    if (PostMediaType.fromExtension(widget.delegate.mediaUrls[index]) ==
         PostMediaType.video) {
       return PostVideoWidget(
-        size: size,
-        delegate: delegate.copyWith(
-          mediaUrls: [delegate.mediaUrls[index]],
+        size: widget.size,
+        delegate: widget.delegate.copyWith(
+          mediaUrls: [widget.delegate.mediaUrls[index]],
         ),
         productLinkerContent: const SizedBox(),
+        visibleFraction: 1,
       );
     } else {
       return PostImageWidget(
-        size: size,
-        delegate: delegate.copyWith(
-          mediaUrls: [delegate.mediaUrls[index]],
+        size: widget.size,
+        delegate: widget.delegate.copyWith(
+          mediaUrls: [widget.delegate.mediaUrls[index]],
         ),
         productLinkerContent: const SizedBox(),
       );
     }
-  }
-}
-
-class MyScrollBehavior extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
   }
 }

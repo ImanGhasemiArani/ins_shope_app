@@ -1,5 +1,6 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
 
 import 'post_footer_widget.dart';
 import 'post_header_widget.dart';
@@ -103,9 +104,10 @@ enum PostMediaType {
   final List<String> supportedExtensions;
   final double ratio;
 
-  static PostMediaType fromExtension(String extension) {
-    extension = extension.toLowerCase().replaceAll('.', '');
+  static PostMediaType fromExtension(String url) {
+    final extension = p.extension(url).toLowerCase().replaceAll('.', '');
     for (final type in values) {
+      if (type != image && type != video) continue;
       if (type.supportedExtensions.contains(extension)) {
         return type;
       }

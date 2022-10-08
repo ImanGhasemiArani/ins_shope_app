@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:path/path.dart' as p;
-
 import '../widget/ad_slider_widget/ad_slider_item.dart';
 import '../widget/explore_list_view/explore_view_widget/explore_post_view.dart';
 import '../widget/post_view/post_view.dart';
@@ -76,7 +74,11 @@ class FkDataGenerator {
         } else {
           mediaLink = List.generate(
             Random().nextInt(9) + 2,
-            (index) => 'https://picsum.photos/${index + 600}',
+            (index) {
+              return Random().nextBool()
+                  ? 'https://picsum.photos/${index + 600}'
+                  : videoLink[Random().nextInt(videoLink.length)];
+            },
           );
           type = PostMediaType.group;
         }
@@ -84,7 +86,7 @@ class FkDataGenerator {
           'Iman.Casper',
           "Tehran, Iran",
           'https://picsum.photos/${Random().nextInt(50) + 50}',
-          mediaLink,
+          mediaLink..shuffle(),
           "میلیاردها انسان در جهان متولد شده اند؛ اما هیچ یک اثر انگشت مشابه نداشته‌اند. اثر انگشت تو، امضای خداوند است که اتفاقی به دنیا نیامده‌ای و دعوت شده‌ای تو منحصر به فردی مشابه یا بدل نداری تو اصل اصل هستی و تکرار نشدنی وقتی انتخاب شده بودن و منحصر به فرد بودنت را یادآوری کنی؛ دیگر خودت را با هیچکس مقایسه نمی‌کنی و احساس حقارت یا برتری که حاصل مقایسه کردن است از وجودت محو می‌شود.\n\nحسین الهی قمشه‌ای\n\n\n\n#Iman\n@Casper\n\n",
           Random().nextInt(10000),
           "کفش ورزشی",
@@ -134,7 +136,7 @@ class FkDataGenerator {
         }
 
         return ExplorePostContentDelegate(
-          mediaLink,
+          mediaLink..shuffle(),
           type,
           enableAutoPlay,
           () {},
