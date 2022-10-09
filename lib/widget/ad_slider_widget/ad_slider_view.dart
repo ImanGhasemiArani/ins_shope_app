@@ -22,7 +22,7 @@ class AdSliderView extends StatelessWidget {
       itemCount: contentDelegates.length,
       itemBuilder: (context, index, realIndex) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: AdSliderItem(
             delegate: contentDelegates[index],
             imgSize: Size(double.infinity, height),
@@ -33,7 +33,7 @@ class AdSliderView extends StatelessWidget {
         autoPlayAnimationDuration: const Duration(milliseconds: 1000),
         autoPlay: true,
         enlargeCenterPage: true,
-        viewportFraction: 1,
+        viewportFraction: 0.85,
         height: height,
         onPageChanged: (index, reason) => currentAdIndex.value = index,
         clipBehavior: Clip.none,

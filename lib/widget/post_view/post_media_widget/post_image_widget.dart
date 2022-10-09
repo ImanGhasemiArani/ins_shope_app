@@ -10,10 +10,10 @@ class PostImageWidget extends PostMediaWidget {
     super.key,
     required super.size,
     required super.delegate,
-    this.productLinkerContent,
+    this.isShowLinker = true,
   }) : super(type: PostMediaType.image);
 
-  final Widget? productLinkerContent;
+  final bool isShowLinker;
 
   @override
   Widget buildMediaContent() {
@@ -49,9 +49,6 @@ class PostImageWidget extends PostMediaWidget {
 
   @override
   Widget buildProductLinkerContent() {
-    if (productLinkerContent != null) {
-      return productLinkerContent!;
-    }
-    return super.buildProductLinkerContent();
+    return isShowLinker ? super.buildProductLinkerContent() : const SizedBox();
   }
 }

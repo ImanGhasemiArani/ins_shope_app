@@ -11,6 +11,8 @@ import '../utils/fake_data_generator.dart';
 import '../widget/explore_list_view/explore_list_view.dart';
 import '../widget/my_app_bar/my_app_bar.dart';
 
+var canLoadMoreExplorePost = true;
+
 class ScreenExplore extends StatelessWidget {
   const ScreenExplore({super.key});
 
@@ -19,8 +21,8 @@ class ScreenExplore extends StatelessWidget {
     return NotificationListener<ScrollEndNotification>(
       onNotification: (scrollNotification) {
         if (scrollNotification.metrics.pixels >=
-            scrollNotification.metrics.maxScrollExtent - 1000) {
-          _loadMorePost();
+            scrollNotification.metrics.maxScrollExtent) {
+          _loadMoreExplorePost();
         }
         return false;
       },
@@ -73,8 +75,11 @@ class ScreenExplore extends StatelessWidget {
   }
 
   Widget _buildExploreListContent() {
-    return ExploreListView(
-      contentDelegates: FkDataGenerator.generateExplorePostContentDelegate(),
+    return NotificationListener<ScrollEndNotification>(
+      onNotification: (_) => true,
+      child: ExploreListView(
+        contentDelegates: FkDataGenerator.generateExplorePostContentDelegate(),
+      ),
     );
   }
 
@@ -98,13 +103,15 @@ class ScreenExplore extends StatelessWidget {
     );
   }
 
-  void _loadMorePost() {
+  void _loadMoreExplorePost() {
+    if (!canLoadMoreExplorePost) return;
+    canLoadMoreExplorePost = false;
     Future.delayed(
       const Duration(seconds: 1),
       () {
         lazyExplorePost
             .addAll(FkDataGenerator.generateExplorePostContentDelegate());
       },
-    );
+    ).then((value) => canLoadMoreExplorePost = true);
   }
 }

@@ -14,6 +14,8 @@ import '../widget/post_view/post_list_view.dart';
 import '../widget/special_offers_content.dart/special_offers_list_view.dart';
 import '../widget/story_content_Widget/story_list_view.dart';
 
+var canLoadMorePost = true;
+
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
 
@@ -89,6 +91,13 @@ class BodyContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollEndNotification>(
+      onNotification: (notification) {
+        if (notification.metrics.pixels >=
+            notification.metrics.maxScrollExtent) {
+          _loadMorePost();
+        }
+        return false;
+      },
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         clipBehavior: Clip.none,
@@ -107,21 +116,17 @@ class BodyContent extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
       ),
-      onNotification: (notification) {
-        if (notification.metrics.pixels >=
-            notification.metrics.maxScrollExtent - 1000) {
-          _loadMorePost();
-        }
-        return false;
-      },
     );
   }
 
   Widget _buildStoryContent() {
     //if its used for slivers, this return should Wrap to SliverToBoxAdapter
-    return StoryListView(
-      storyItemSize: (Get.width - 40 * 2) / 6,
-      contentDelegates: FkDataGenerator.generateStoryContentsDelegate(),
+    return NotificationListener<ScrollEndNotification>(
+      onNotification: (_) => true,
+      child: StoryListView(
+        storyItemSize: (Get.width - 40 * 2) / 6,
+        contentDelegates: FkDataGenerator.generateStoryContentsDelegate(),
+      ),
     );
   }
 
@@ -134,14 +139,20 @@ class BodyContent extends StatelessWidget {
 
   Widget _buildSpecOffersContent() {
     //if its used for slivers, this return should Wrap to SliverToBoxAdapter
-    return SpecOffersListView(
-      contentDelegates: FkDataGenerator.generateSpecContentsDelegate(),
+    return NotificationListener<ScrollEndNotification>(
+      onNotification: (_) => true,
+      child: SpecOffersListView(
+        contentDelegates: FkDataGenerator.generateSpecContentsDelegate(),
+      ),
     );
   }
 
   Widget _buildPostContent() {
-    return PostListView(
-      contentDelegates: FkDataGenerator.generatePostContentsDelegate(),
+    return NotificationListener<ScrollEndNotification>(
+      onNotification: (_) => true,
+      child: PostListView(
+        contentDelegates: FkDataGenerator.generatePostContentsDelegate(),
+      ),
     );
   }
 
@@ -166,11 +177,13 @@ class BodyContent extends StatelessWidget {
   }
 
   void _loadMorePost() {
+    if (!canLoadMorePost) return;
+    canLoadMorePost = false;
     Future.delayed(
       const Duration(seconds: 1),
       () {
         lazyList.addAll(FkDataGenerator.generatePostContentsDelegate());
       },
-    );
+    ).then((value) => canLoadMorePost = true);
   }
 }

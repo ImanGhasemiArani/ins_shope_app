@@ -21,6 +21,7 @@ class ScreenProfile extends StatelessWidget {
   const ScreenProfile({super.key});
   @override
   Widget build(BuildContext context) {
+    return const SizedBox();
     bool isFirstTime = true;
     return SafeArea(
         child: Scaffold(

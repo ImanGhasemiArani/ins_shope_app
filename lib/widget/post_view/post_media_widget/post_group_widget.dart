@@ -18,32 +18,12 @@ class PostGroupWidget extends PostMediaWidget {
 
   @override
   Widget buildMediaContent() {
-    return PageViewContent(size: size, delegate: delegate);
-  }
-}
-
-class PageViewContent extends StatefulWidget {
-  const PageViewContent({
-    super.key,
-    required this.size,
-    required this.delegate,
-  });
-  final Size size;
-  final PostContentDelegate delegate;
-
-  @override
-  State<PageViewContent> createState() => _PageViewContentState();
-}
-
-class _PageViewContentState extends State<PageViewContent> {
-  final currentPage = 0.obs;
-  @override
-  Widget build(BuildContext context) {
+    final currentPage = 0.obs;
     return Stack(
       children: [
         PageView.builder(
           scrollBehavior: NoIndicatorScrollBehavior(),
-          itemCount: widget.delegate.mediaUrls.length,
+          itemCount: delegate.mediaUrls.length,
           itemBuilder: (context, index) => _buildDynamicPostWidget(index),
           onPageChanged: (value) {
             currentPage.value = value;
@@ -65,7 +45,7 @@ class _PageViewContentState extends State<PageViewContent> {
               child: Obx(
                 () {
                   return Text(
-                    '${currentPage.value + 1}/${widget.delegate.mediaUrls.length}'
+                    '${currentPage.value + 1}/${delegate.mediaUrls.length}'
                         .trNums(),
                     textAlign: TextAlign.center,
                     style: Get.textTheme.caption?.copyWith(color: Colors.white),
@@ -80,23 +60,23 @@ class _PageViewContentState extends State<PageViewContent> {
   }
 
   Widget _buildDynamicPostWidget(index) {
-    if (PostMediaType.fromExtension(widget.delegate.mediaUrls[index]) ==
+    if (PostMediaType.fromExtension(delegate.mediaUrls[index]) ==
         PostMediaType.video) {
       return PostVideoWidget(
-        size: widget.size,
-        delegate: widget.delegate.copyWith(
-          mediaUrls: [widget.delegate.mediaUrls[index]],
+        size: size,
+        delegate: delegate.copyWith(
+          mediaUrls: [delegate.mediaUrls[index]],
         ),
-        productLinkerContent: const SizedBox(),
+        isShowLinker: false,
         visibleFraction: 1,
       );
     } else {
       return PostImageWidget(
-        size: widget.size,
-        delegate: widget.delegate.copyWith(
-          mediaUrls: [widget.delegate.mediaUrls[index]],
+        size: size,
+        delegate: delegate.copyWith(
+          mediaUrls: [delegate.mediaUrls[index]],
         ),
-        productLinkerContent: const SizedBox(),
+        isShowLinker: false,
       );
     }
   }

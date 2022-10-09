@@ -15,11 +15,11 @@ class PostVideoWidget extends PostMediaWidget {
     super.key,
     required super.size,
     required super.delegate,
-    this.productLinkerContent,
-    this.visibleFraction = 0.6,
+    this.isShowLinker = true,
+    this.visibleFraction = 0.8,
   }) : super(type: PostMediaType.video);
 
-  final Widget? productLinkerContent;
+  final bool isShowLinker;
   final double visibleFraction;
 
   @override
@@ -30,10 +30,7 @@ class PostVideoWidget extends PostMediaWidget {
 
   @override
   Widget buildProductLinkerContent() {
-    if (productLinkerContent != null) {
-      return productLinkerContent!;
-    }
-    return super.buildProductLinkerContent();
+    return isShowLinker ? super.buildProductLinkerContent() : const SizedBox();
   }
 }
 
